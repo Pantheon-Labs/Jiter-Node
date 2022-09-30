@@ -3,10 +3,10 @@ import { axiosInstance } from '../axios';
 
 const baseRoute = '/events';
 
-interface CreateEventProps {
+export type CreateEventProps = {
   // TODO: other properties
   payload: string;
-}
+};
 
 // TODO: Example
 export const createEvent = async ({ payload }: CreateEventProps) => {
