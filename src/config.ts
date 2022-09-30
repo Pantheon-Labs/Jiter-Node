@@ -1,6 +1,6 @@
 import { DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
 
-interface JiterInitOptions {
+interface DefaultJiterConfigOptions {
   /**
    * @default {@link DEFAULT_URL}
    */
@@ -11,18 +11,26 @@ interface JiterInitOptions {
   defaultTimeout?: number;
 }
 
-const defaultConfig: Required<JiterInitOptions> = {
+const defaultConfigOptions: Required<DefaultJiterConfigOptions> = {
   defaultUrl: DEFAULT_URL,
   defaultTimeout: DEFAULT_TIMEOUT,
 };
 
-let JiterConfig: Required<JiterInitOptions> = {
-  defaultUrl: DEFAULT_URL,
-  defaultTimeout: DEFAULT_TIMEOUT,
-};
+interface JiterConfigOptions extends Partial<DefaultJiterConfigOptions> {
+  /**
+   * The API Key for your given org. Go to {@link https://app.jiter.dev/} to find your API Key
+   */
+  apiKey: string;
+}
 
-export const JiterInit = (JiterInitOptions: JiterInitOptions) => {
-  JiterConfig = { ...defaultConfig, ...JiterInitOptions };
+let JiterConfig: JiterConfigOptions;
+
+/**
+ * Initializes the Jiter SDK
+ */
+export const JiterInit = (jiterConfigOptions: JiterConfigOptions) => {
+  JiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
+  if (!JiterConfig.apiKey) throw new Error('Invalid API key');
 };
 
 export const getJiterConfig = () => JiterConfig;

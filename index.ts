@@ -1,9 +1,10 @@
-import { JiterInit } from './src/config';
+import { getJiterConfig, JiterInit } from './src/config';
+import Jiter from './src/jiter';
 
 //  TODO: Remove
 // Example:
 const main = () => {
-  JiterInit({});
+  // JiterInit({ apiKey: undefined });
 };
 
 main();
