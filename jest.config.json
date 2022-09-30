@@ -2,5 +2,13 @@
   "preset": "ts-jest",
   "testEnvironment": "node",
   "moduleFileExtensions": ["js", "json", "ts"],
-  "testMatch": ["**/*.test.ts"]
+  "testMatch": ["**/*.test.ts"],
+  "coverageThreshold": {
+    "global": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    }
+  }
 }

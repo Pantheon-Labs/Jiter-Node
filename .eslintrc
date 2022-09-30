@@ -16,7 +16,7 @@
     "ecmaVersion": 2018,
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["node_modules", "/lib", "**/*.js"],
+  "ignorePatterns": ["node_modules", "/lib", "**/*.js", "coverage"],
   "rules": {
     "@typescript-eslint/no-floating-promises": ["error"],
     "no-void": ["error", { "allowAsStatement": true }],
