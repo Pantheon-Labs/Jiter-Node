@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getJiterConfig } from './init';
+import { getJiterConfig } from './config';
 
 const config = getJiterConfig();
 export const axiosInstance = axios.create({

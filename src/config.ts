@@ -1,6 +1,6 @@
 import { DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
 
-interface JiterInitProps {
+interface JiterInitOptions {
   /**
    * @default {@link DEFAULT_URL}
    */
@@ -11,18 +11,18 @@ interface JiterInitProps {
   defaultTimeout?: number;
 }
 
-const defaultConfig: Required<JiterInitProps> = {
+const defaultConfig: Required<JiterInitOptions> = {
   defaultUrl: DEFAULT_URL,
   defaultTimeout: DEFAULT_TIMEOUT,
 };
 
-let JiterConfig: Required<JiterInitProps> = {
+let JiterConfig: Required<JiterInitOptions> = {
   defaultUrl: DEFAULT_URL,
   defaultTimeout: DEFAULT_TIMEOUT,
 };
 
-export const Init = (jiterInitProps: JiterInitProps) => {
-  JiterConfig = { ...defaultConfig, ...jiterInitProps };
+export const JiterInit = (JiterInitOptions: JiterInitOptions) => {
+  JiterConfig = { ...defaultConfig, ...JiterInitOptions };
 };
 
 export const getJiterConfig = () => JiterConfig;
