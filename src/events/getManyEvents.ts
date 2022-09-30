@@ -1,8 +1,7 @@
 import { AxiosError } from 'axios';
 import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
-
-interface GetManyEventsOptions extends Omit<{}
+import { GetManyEventsOptions } from './types/GetManyEventsOptions';
 
 /**
  * Retrieve info about a single event
