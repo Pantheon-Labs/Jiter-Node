@@ -16,7 +16,7 @@ function isParsed<T extends JiterEventObjectPayload>(
   return options?.parse === true;
 }
 
-interface HandleWebhookFn {
+interface WebhookHandler {
   <T extends JiterEventObjectPayload>(
     callback: WebhookHandlerParsedCallback<T>,
     options: WebhookHandlerWithParsingOptions,
@@ -25,7 +25,7 @@ interface HandleWebhookFn {
   (callback: WebhookHandlerCallback): Handler;
 }
 
-export const handleWebhook: HandleWebhookFn =
+export const handleWebhook: WebhookHandler =
   <T extends JiterEventObjectPayload = never>(...args: WebhookHandlerArgs<T>): Handler =>
   (req, res) => {
     const [callback, options] = args;
