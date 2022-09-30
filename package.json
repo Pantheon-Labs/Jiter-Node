@@ -30,9 +30,10 @@
     "clean": "rimraf lib coverage",
     "reset": "yarn clean && rimraf **/node_modules"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
   "devDependencies": {
-    "axios": "^0.27.2",
     "@types/jest": "^29.1.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",

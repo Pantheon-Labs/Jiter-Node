@@ -1,5 +1,5 @@
-export const jiter = async () => {
-  // TODO: Create Events
-  // TODO: Get Events
-  // TODO: Verify Signature
+import * as Events from './events';
+
+export const Jiter = {
+  Events,
 };

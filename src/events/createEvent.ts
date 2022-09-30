@@ -12,6 +12,5 @@ export const createEvent = async ({ payload }: CreateEventProps) => {
   } catch (err) {
     const error = err as AxiosError;
 
-    error.status
   }
 };
