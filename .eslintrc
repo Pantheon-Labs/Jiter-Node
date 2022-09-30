@@ -1,0 +1,46 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "jest"],
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "extends": ["airbnb-base", "airbnb-typescript/base", "prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "project": "./tsconfig.json"
+  },
+  "ignorePatterns": ["node_modules", "/lib", "**/*.js", "coverage"],
+  "rules": {
+    "@typescript-eslint/no-floating-promises": ["error"],
+    "no-void": ["error", { "allowAsStatement": true }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.ts", "seeds/**/*.ts"] }
+    ],
+    "import/order": ["error"],
+    "prefer-template": ["error"],
+    "no-plusplus": ["error"],
+    "no-nested-ternary": ["error"],
+    "import/extensions": ["error", "ignorePackages", { "js": "never", "ts": "never" }],
+    "import/prefer-default-export": ["off"]
+  },
+  "settings": {
+    "import/resolver": { "node": { "extensions": [".js", ".ts"] } }
+  },
+  "overrides": [
+    {
+      "files": ["**/tests/**/*"],
+      "rules": {
+        "global-require": "off",
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}
