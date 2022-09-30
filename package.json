@@ -6,5 +6,8 @@
   "repository": "https://github.com/Pantheon-Labs/jiter-node.git",
   "author": "Pantheon Labs",
   "license": "Apache-2.0",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }
