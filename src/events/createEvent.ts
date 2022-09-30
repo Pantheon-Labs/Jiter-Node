@@ -1,9 +1,7 @@
 import { AxiosError } from 'axios';
 import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
-import { BaseEvent } from './types/BaseEvent';
-
-interface CreateEventOptions extends Required<Omit<BaseEvent, 'status'>> {}
+import { CreateEventOptions } from './types/CreateEventOptions';
 
 /**
  * Create an event
