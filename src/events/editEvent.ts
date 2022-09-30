@@ -11,10 +11,10 @@ interface EditEventOptions extends Partial<BaseEvent> {
 }
 
 export const editEvent = async (editEventOptions: EditEventOptions) => {
+  const { id, ...editableProperties } = editEventOptions;
   try {
-    const response = await axiosInstance.put(`${baseRoute}/${editEventOptions.id}`, {
-      ...editEventOptions,
-      id: undefined,
+    const response = await axiosInstance.put(`${baseRoute}/${id}`, {
+      ...editableProperties,
     });
     return response;
   } catch (err) {
@@ -22,5 +22,3 @@ export const editEvent = async (editEventOptions: EditEventOptions) => {
     return error;
   }
 };
-
-
