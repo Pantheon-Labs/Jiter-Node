@@ -1,6 +1,5 @@
 import { BaseEvent } from './BaseEvent';
 
-export type EditEventOptions = Required<
-  Pick<BaseEvent, 'scheduledTime' | 'payload' | 'destination' | 'id'>
->;
-
+type EditableProperties = Partial<Pick<BaseEvent, 'scheduledTime' | 'payload' | 'destination'>>;
+type RequiredProperties = Pick<BaseEvent, 'id'>;
+export type EditEventOptions = EditableProperties & RequiredProperties;

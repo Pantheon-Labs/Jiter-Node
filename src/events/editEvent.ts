@@ -3,8 +3,6 @@ import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
 import { EditEventOptions } from './types/EditEventOptions';
 
-
-
 /**
  * Edit a single event
  */
