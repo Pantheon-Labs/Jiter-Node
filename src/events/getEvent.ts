@@ -1,13 +1,7 @@
 import { AxiosError } from 'axios';
 import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
-
-interface GetEventOptions {
-  /**
-   * ID of the event that you would like to retrieve
-   */
-  id: string;
-}
+import { GetEventOptions } from './types/GetEventOptions';
 
 /**
  * Retrieve info about a single event
