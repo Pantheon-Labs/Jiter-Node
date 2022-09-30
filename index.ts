@@ -1,5 +1,9 @@
-import Jiter from './src/jiter';
+import { JiterInit } from './src/config';
 
+//  TODO: Remove
+// Example:
 const main = () => {
-  Jiter.Init({});
+  JiterInit({});
 };
+
+main();
