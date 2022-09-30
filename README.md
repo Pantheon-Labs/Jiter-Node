@@ -1,2 +1,2 @@
-# jiter-node
+# @jiter/node
 The official Node SDK for Jiter
