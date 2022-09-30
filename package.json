@@ -1,0 +1,10 @@
+{
+  "name": "jiter-node",
+  "version": "0.1.0",
+  "description": "The official Node SDK for Jiter",
+  "main": "index.ts",
+  "repository": "https://github.com/Pantheon-Labs/jiter-node.git",
+  "author": "Pantheon Labs",
+  "license": "Apache2",
+  "private": false
+}
