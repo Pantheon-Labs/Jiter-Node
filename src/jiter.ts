@@ -1,5 +1,10 @@
 import * as Events from './events';
+import { Init, getJiterConfig } from './init';
 
-export const Jiter = {
+const Jiter = {
   Events,
+  Init,
+  getJiterConfig,
 };
+
+export default Jiter;

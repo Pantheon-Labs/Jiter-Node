@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
+import { getJiterConfig } from './init';
 
+const config = getJiterConfig();
 export const axiosInstance = axios.create({
-  baseURL: DEFAULT_URL,
-  timeout: DEFAULT_TIMEOUT,
+  baseURL: config.defaultUrl,
+  timeout: config.defaultTimeout,
 });
