@@ -3,7 +3,7 @@ import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 
-interface CreateEventOptions extends Required<BaseEvent> {}
+interface CreateEventOptions extends Required<Omit<BaseEvent, 'status'>> {}
 
 /**
  * Create an event

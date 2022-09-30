@@ -1,3 +1,5 @@
+import { EventStatus } from './EventStatus';
+
 export interface BaseEvent {
   /**
    * Your stringified payload
@@ -15,4 +17,34 @@ export interface BaseEvent {
    * https://your.app/webhooks/jiter
    */
   destination: string;
+
+  /**
+   * The current event status. See {@link EventStatus}
+   */
+  status: EventStatus;
+
+  /**
+   * When this event was created
+   */
+  createdAt: string;
+
+  /**
+   * When this event was last updated
+   */
+  updatedAt: string;
+
+  /**
+   * ID of the org this event belongs to
+   */
+  org: string;
+
+  /**
+   * Date when this event was sent to your destination. This will only be here if the event was successfully sent.
+   */
+  sentAt?: string;
+
+  /**
+   * Date when this event failed. Either to queue or to send to your endpoint.
+   */
+  failedAt?: string;
 }

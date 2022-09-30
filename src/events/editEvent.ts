@@ -3,7 +3,7 @@ import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 
-interface EditEventOptions extends Partial<BaseEvent> {
+interface EditEventOptions extends Partial<Omit<BaseEvent, 'status'>> {
   /**
    * ID of the event that you would like to edit
    */
