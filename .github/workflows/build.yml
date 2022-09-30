@@ -29,11 +29,3 @@ jobs:
 
       - name: Build
         run: yarn build
-
-      - name: Entrypoint check
-        run: |
-          ENTRYPOINT_FILE="./packages/api/dist/index.js"
-          if ! test -f "$ENTRYPOINT_FILE"; then
-            echo "App entrypoint file missing ($ENTRYPOINT_FILE); app will fail to start in runtime environments."
-            exit 1
-          fi
