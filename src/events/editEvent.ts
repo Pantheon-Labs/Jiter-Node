@@ -1,14 +1,9 @@
 import { AxiosError } from 'axios';
 import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
-import { BaseEvent } from './types/BaseEvent';
+import { EditEventOptions } from './types/EditEventOptions';
 
-interface EditEventOptions extends Partial<Omit<BaseEvent, 'status'>> {
-  /**
-   * ID of the event that you would like to edit
-   */
-  id: string;
-}
+
 
 /**
  * Edit a single event

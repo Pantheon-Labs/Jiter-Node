@@ -2,6 +2,10 @@ import { EventStatus } from './EventStatus';
 
 export interface BaseEvent {
   /**
+   * ID of this event
+   */
+  id: string;
+  /**
    * Your stringified payload
    * @example '{"action":"buyGroceries","values":["eggs","bacon","pasta","bread"]}'
    */

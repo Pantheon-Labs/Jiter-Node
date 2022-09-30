@@ -4,7 +4,7 @@ import Jiter from './src/jiter';
 //  TODO: Remove
 // Example:
 const main = () => {
-  // JiterInit({ apiKey: undefined });
+  JiterInit({ apiKey: 'sadasd' });
 };
 
 main();
