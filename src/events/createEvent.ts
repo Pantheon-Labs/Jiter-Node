@@ -5,6 +5,9 @@ import { BaseEvent } from './types/BaseEvent';
 
 interface CreateEventOptions extends Required<BaseEvent> {}
 
+/**
+ * Create an event
+ */
 export const createEvent = async (createEventOptions: CreateEventOptions) => {
   try {
     const response = await axiosInstance.post(baseRoute, { ...createEventOptions });

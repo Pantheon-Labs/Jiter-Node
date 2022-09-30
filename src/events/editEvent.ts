@@ -10,6 +10,9 @@ interface EditEventOptions extends Partial<BaseEvent> {
   id: string;
 }
 
+/**
+ * Edit a single event
+ */
 export const editEvent = async (editEventOptions: EditEventOptions) => {
   const { id, ...editableProperties } = editEventOptions;
   try {
