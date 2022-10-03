@@ -1,4 +1,5 @@
 import { JiterInit } from './src/config';
+import { BaseEvent } from './src/events/types/BaseEvent';
 import Jiter from './src/jiter';
 
 //  TODO: Remove
@@ -6,18 +7,18 @@ import Jiter from './src/jiter';
 const main = async () => {
   JiterInit({ apiKey: 'asd' });
 
-  const { success: event, failure: createError } = await Jiter.Events.createEvent({
-    destination: `https://joswayski.requestcatcher.com`,
-    payload: 'Hello there!',
-    scheduledTime: new Date(Date() + 8000).toISOString(),
-  });
+  let createdEvent: BaseEvent;
+  try {
+    createdEvent = await Jiter.Events.createEvent({
+      destination: `https://joswayski.requestcatcher.com`,
+      payload: 'Hello there!',
+      scheduledTime: new Date(Date() + 8000).toISOString(),
+    });
 
-  if (createError) {
-    console.log(createError.message);
-    return;
+    console.log(createdEvent);
+  } catch (error) {
+    console.error(error);
   }
-
-  console.log(`Event Created!`, event);
 };
 
 void main();

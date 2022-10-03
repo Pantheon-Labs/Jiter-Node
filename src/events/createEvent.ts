@@ -8,17 +8,6 @@ import { CreateEventOptions } from './types/CreateEventOptions';
  * Create an event
  */
 export const createEvent = async (createEventOptions: CreateEventOptions) => {
-  try {
-    const response = await axiosInstance.post<BaseEvent>(baseRoute, { ...createEventOptions });
-    return {
-      success: response.data,
-      failure: undefined,
-    };
-  } catch (err) {
-    const error = err as AxiosError;
-    return {
-      success: undefined,
-      failure: error,
-    };
-  }
+  const response = await axiosInstance.post<BaseEvent>(baseRoute, { ...createEventOptions });
+  return response.data;
 };
