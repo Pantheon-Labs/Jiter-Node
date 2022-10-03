@@ -20,4 +20,19 @@ describe('events', () => {
     expect(event.scheduledTime).toBe(eventOptions.scheduledTime);
     expect(event.status).toBe(EventStatus.Pending);
   });
+
+  it('queues up events in the next 15 minutes', async () => {
+    const futureTime = new Date(Date() + 1000 * 60).toISOString();
+    const eventOptions: CreateEventOptions = {
+      destination: `https://joswayski.requestcatcher.com`,
+      payload: 'beans',
+      scheduledTime: futureTime,
+    };
+    const event = await Jiter.Events.createEvent(eventOptions);
+
+    expect(event.destination).toBe(eventOptions.destination);
+    expect(event.payload).toBe(eventOptions.payload);
+    expect(event.scheduledTime).toBe(eventOptions.scheduledTime);
+    expect(event.status).toBe(EventStatus.Queued);
+  });
 });
