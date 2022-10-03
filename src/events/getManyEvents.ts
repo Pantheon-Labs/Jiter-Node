@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
@@ -14,17 +13,6 @@ export const getManyEvents = async (getManyEventsOptions: GetManyEventsOptions) 
     baseUrl += `${key}=${getManyEventsOptions[key as keyof GetManyEventsOptions]}`;
   });
 
-  try {
-    const response = await axiosInstance.get<BaseEvent[]>(baseUrl);
-    return {
-      success: response.data,
-      failure: undefined,
-    };
-  } catch (err) {
-    const error = err as AxiosError;
-    return {
-      success: undefined,
-      failure: error,
-    };
-  }
+  const response = await axiosInstance.get<BaseEvent[]>(baseUrl);
+  return response.data;
 };

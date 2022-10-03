@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { axiosInstance } from '../axios';
 import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
