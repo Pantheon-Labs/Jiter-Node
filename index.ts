@@ -1,10 +1,10 @@
-import { getJiterConfig, JiterInit } from './src/config';
+import { JiterInit } from './src/config';
 import Jiter from './src/jiter';
 
 //  TODO: Remove
 // Example:
 const main = async () => {
-  JiterInit({ apiKey: 'sadasd' });
+  JiterInit({ apiKey: 'asd' });
 
   const { success: event, failure: createError } = await Jiter.Events.createEvent({
     destination: `https://joswayski.requestcatcher.com`,
@@ -20,4 +20,4 @@ const main = async () => {
   console.log(`Event Created!`, event);
 };
 
-main();
+void main();

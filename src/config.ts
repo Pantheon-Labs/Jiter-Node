@@ -23,13 +23,15 @@ interface JiterConfigOptions extends Partial<DefaultJiterConfigOptions> {
   apiKey: string;
 }
 
-let JiterConfig: JiterConfigOptions;
+let JiterConfig: JiterConfigOptions = { ...defaultConfigOptions, apiKey: 'NOT_SET' };
 
 /**
  * Initializes the Jiter SDK
  */
 export const JiterInit = (jiterConfigOptions: JiterConfigOptions) => {
+  console.log(`Jiter COnfig options`, jiterConfigOptions);
   JiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
+  console.log(`Jiter Config`, JiterConfig);
   if (!JiterConfig.apiKey) throw new Error('Invalid API key');
 };
 
