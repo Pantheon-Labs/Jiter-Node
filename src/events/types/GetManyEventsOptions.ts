@@ -2,11 +2,11 @@ import { EventStatus } from './EventStatus';
 
 type FilterableProperties = {
   /**
-   * Filter events that are scheduled to start after this ISO timestamp
+   * Filter events that are scheduled to be sent after this ISO timestamp
    */
   scheduledStartTime: string;
   /**
-   * Filter events that are scheduled to start before this ISO timestamp
+   * Filter events that are scheduled to be sent before this ISO timestamp
    */
   scheduledEndTime: string;
   /**

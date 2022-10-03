@@ -4,7 +4,7 @@ import { baseRoute } from './consts';
 import { GetManyEventsOptions } from './types/GetManyEventsOptions';
 
 /**
- * Retrieve info about many events. See {@link GetManyEventsOptions} for filterable keys.
+ * Retrieve info about many events. See {@link GetManyEventsOptions} for filterable keys
  */
 export const getManyEvents = async (getManyEventsOptions: GetManyEventsOptions) => {
   let baseUrl = `${baseRoute}?`;
