@@ -6,7 +6,18 @@ import Jiter from './src/jiter';
 const main = async () => {
   JiterInit({ apiKey: 'sadasd' });
 
-  await Jiter.Events.getManyEvents({});
+  const { success: event, failure: createError } = await Jiter.Events.createEvent({
+    destination: `https://joswayski.requestcatcher.com`,
+    payload: 'Hello there!',
+    scheduledTime: new Date(Date() + 8000).toISOString(),
+  });
+
+  if (createError) {
+    console.log(createError.message);
+    return;
+  }
+
+  console.log(`Event Created!`, event);
 };
 
 main();
