@@ -1,5 +1,5 @@
 {
-  "name": "jiter-node",
+  "name": "@jiter/node",
   "version": "0.1.0",
   "description": "The official Node SDK for Jiter",
   "main": "./lib/index.js",
@@ -8,6 +8,7 @@
   "repository": "https://github.com/Pantheon-Labs/jiter-node.git",
   "author": "Pantheon Labs",
   "license": "Apache-2.0",
+  "private": "false",
   "keywords": [
     "Jiter",
     "cron",
@@ -19,6 +20,7 @@
   ],
   "scripts": {
     "build": "tsc --pretty",
+    "build:watch": "yarn build --watch",
     "typecheck": "tsc",
     "test": "yarn jest",
     "test:coverage": "yarn test --coverage",
@@ -29,7 +31,9 @@
     "clean": "rimraf lib coverage",
     "reset": "yarn clean && rimraf **/node_modules"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
   "devDependencies": {
     "@types/jest": "^29.1.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
