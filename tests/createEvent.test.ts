@@ -1,4 +1,4 @@
-import Jiter, { BaseEvent, CreateEventOptions, EventStatus } from '../src';
+import Jiter from '../src';
 import { getAxios } from '../src/axios';
 import { baseRoute } from '../src/events/consts';
 
