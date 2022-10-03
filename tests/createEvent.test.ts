@@ -1,38 +1,38 @@
 import Jiter, { BaseEvent, CreateEventOptions, EventStatus } from '../src';
+import { getAxios } from '../src/axios';
+import { baseRoute } from '../src/events/consts';
 
-describe('events', () => {
-  Jiter.init({
-    baseUrl: 'asd',
-    apiKey: 'test',
+const apiKey = 'test';
+
+jest.mock('../src/axios');
+describe('Events Resource', () => {
+  beforeAll(() => {
+    Jiter.init({
+      apiKey,
+    });
   });
 
-  it('creates an event in 1hr', async () => {
-    const futureTime = new Date(Date() + 1000 * 60 * 60).toISOString();
-    const eventOptions: CreateEventOptions = {
-      destination: `https://joswayski.requestcatcher.com`,
-      payload: 'beans',
-      scheduledTime: futureTime,
+  it('creates an event in an hour', async () => {
+    const mockData = { id: 5 };
+    const mockPost = jest.fn(async (...args: any[]) => ({
+      data: mockData,
+    }));
+    (getAxios as unknown as jest.Mock).mockImplementationOnce(() => ({
+      post: mockPost,
+    }));
+
+    const createEventOptions = {
+      payload: 'beep',
+      scheduledTime: new Date(Date.now() + 800).toISOString(),
+      destination: 'asd',
     };
-    const event = await Jiter.Events.createEvent(eventOptions);
+    const response = await Jiter.Events.createEvent(createEventOptions);
 
-    expect(event.destination).toBe(eventOptions.destination);
-    expect(event.payload).toBe(eventOptions.payload);
-    expect(event.scheduledTime).toBe(eventOptions.scheduledTime);
-    expect(event.status).toBe(EventStatus.Pending);
-  });
-
-  it('queues up events in the next 15 minutes', async () => {
-    const futureTime = new Date(Date() + 1000 * 60).toISOString();
-    const eventOptions: CreateEventOptions = {
-      destination: `https://joswayski.requestcatcher.com`,
-      payload: 'beans',
-      scheduledTime: futureTime,
-    };
-    const event = await Jiter.Events.createEvent(eventOptions);
-
-    expect(event.destination).toBe(eventOptions.destination);
-    expect(event.payload).toBe(eventOptions.payload);
-    expect(event.scheduledTime).toBe(eventOptions.scheduledTime);
-    expect(event.status).toBe(EventStatus.Queued);
+    expect(mockPost).toHaveBeenCalledTimes(1);
+    expect(mockPost).toHaveBeenCalledWith(
+      baseRoute,
+      expect.objectContaining({ ...createEventOptions }),
+    );
+    expect(response).toEqual(mockData);
   });
 });
