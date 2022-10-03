@@ -1,5 +1,5 @@
 {
-  "name": "jiter-node",
+  "name": "@jiter/node",
   "version": "0.1.0",
   "description": "The official Node SDK for Jiter",
   "main": "./lib/index.js",
@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "build": "tsc --pretty",
+    "build:watch": "yarn build --watch",
     "typecheck": "tsc",
     "test": "yarn jest",
     "test:coverage": "yarn test --coverage",

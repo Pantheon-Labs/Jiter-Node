@@ -5,10 +5,12 @@ type FilterableProperties = {
    * Filter events that are scheduled to be sent after this ISO timestamp
    */
   scheduledStartTime: string;
+
   /**
    * Filter events that are scheduled to be sent before this ISO timestamp
    */
   scheduledEndTime: string;
+
   /**
    * Filter events that were created after this ISO timestamp
    */

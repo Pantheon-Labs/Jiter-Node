@@ -1,38 +1,32 @@
 import { DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
+import { JiterConfig, JiterConfigInstance, OverrideJiterConfigOptions } from './types/config';
 
-interface DefaultJiterConfigOptions {
-  /**
-   * @default {@link DEFAULT_URL}
-   */
-  defaultUrl?: string;
-  /**
-   * @default {@link DEFAULT_TIMEOUT}
-   */
-  defaultTimeout?: number;
-}
-
-const defaultConfigOptions: Required<DefaultJiterConfigOptions> = {
-  defaultUrl: DEFAULT_URL,
-  defaultTimeout: DEFAULT_TIMEOUT,
+const defaultConfigOptions: Required<Omit<JiterConfig, 'apiKey'> & OverrideJiterConfigOptions> = {
+  baseUrl: DEFAULT_URL,
+  timeout: DEFAULT_TIMEOUT,
 };
 
-interface JiterConfigOptions extends Partial<DefaultJiterConfigOptions> {
-  /**
-   * The API Key for your given org. Go to {@link https://app.jiter.dev/} to find your API Key
-   */
-  apiKey: string;
+let jiterConfig: JiterConfigInstance | undefined;
+
+export interface JiterInit {
+  (config: JiterConfig): void;
+  (config: JiterConfig & Partial<OverrideJiterConfigOptions>): void;
 }
-
-let JiterConfig: JiterConfigOptions = { ...defaultConfigOptions, apiKey: 'NOT_SET' };
-
 /**
  * Initializes the Jiter SDK
+ * @params `configOptions` {@link JiterConfigOptions} for initializing your instance of Jiter
  */
-export const JiterInit = (jiterConfigOptions: JiterConfigOptions) => {
-  console.log(`Jiter COnfig options`, jiterConfigOptions);
-  JiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
-  console.log(`Jiter Config`, JiterConfig);
-  if (!JiterConfig.apiKey) throw new Error('Invalid API key');
+export const init: JiterInit = (jiterConfigOptions) => {
+  jiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
+  if (!jiterConfig.apiKey) throw new Error('Invalid API key');
 };
 
-export const getJiterConfig = () => JiterConfig;
+/**
+ *
+ * @returns the initialized copy of the current JiterConfig
+ * @throws when the config has not been initialized
+ */
+export const getJiterConfig = (): JiterConfigInstance => {
+  if (!jiterConfig) throw new Error('Jiter is not initialized');
+  return jiterConfig;
+};
