@@ -4,26 +4,14 @@ import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 import { CreateEventOptions } from './types/CreateEventOptions';
 
-interface SuccessResponse {
-  success: BaseEvent;
-  failure: undefined;
-}
-
-interface FailureResponse {
-  success: undefined;
-  failure: AxiosError;
-}
-
 /**
  * Create an event
  */
-export const createEvent = async (
-  createEventOptions: CreateEventOptions,
-): Promise<SuccessResponse | FailureResponse> => {
+export const createEvent = async (createEventOptions: CreateEventOptions) => {
   try {
-    const response = await axiosInstance.post(baseRoute, { ...createEventOptions });
+    const response = await axiosInstance.post<BaseEvent>(baseRoute, { ...createEventOptions });
     return {
-      success: response.data as BaseEvent,
+      success: response.data,
       failure: undefined,
     };
   } catch (err) {

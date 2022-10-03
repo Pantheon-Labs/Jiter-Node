@@ -4,25 +4,13 @@ import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 import { GetEventOptions } from './types/GetEventOptions';
 
-interface SuccessResponse {
-  success: BaseEvent;
-  failure: undefined;
-}
-
-interface FailureResponse {
-  success: undefined;
-  failure: AxiosError;
-}
-
 /**
  * Retrieve info about a single event
  */
-export const getEvent = async (
-  getEventOptions: GetEventOptions,
-): Promise<SuccessResponse | FailureResponse> => {
+export const getEvent = async (getEventOptions: GetEventOptions) => {
   const { id } = getEventOptions;
   try {
-    const response = await axiosInstance.get(`${baseRoute}/${id}`);
+    const response = await axiosInstance.get<BaseEvent>(`${baseRoute}/${id}`);
     return {
       success: response.data,
       failure: undefined,

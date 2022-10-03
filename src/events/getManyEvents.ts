@@ -4,22 +4,10 @@ import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 import { GetManyEventsOptions } from './types/GetManyEventsOptions';
 
-interface SuccessResponse {
-  success: BaseEvent[];
-  failure: undefined;
-}
-
-interface FailureResponse {
-  success: undefined;
-  failure: AxiosError;
-}
-
 /**
  * Retrieve info about many events. See {@link GetManyEventsOptions} for filterable keys
  */
-export const getManyEvents = async (
-  getManyEventsOptions: GetManyEventsOptions,
-): Promise<SuccessResponse | FailureResponse> => {
+export const getManyEvents = async (getManyEventsOptions: GetManyEventsOptions) => {
   let baseUrl = `${baseRoute}?`;
 
   Object.keys(getManyEventsOptions).forEach((key) => {
@@ -27,7 +15,7 @@ export const getManyEvents = async (
   });
 
   try {
-    const response = await axiosInstance.get(baseUrl);
+    const response = await axiosInstance.get<BaseEvent[]>(baseUrl);
     return {
       success: response.data,
       failure: undefined,

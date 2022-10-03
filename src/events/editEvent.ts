@@ -4,25 +4,13 @@ import { baseRoute } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 import { EditEventOptions } from './types/EditEventOptions';
 
-interface SuccessResponse {
-  success: BaseEvent;
-  failure: undefined;
-}
-
-interface FailureResponse {
-  success: undefined;
-  failure: AxiosError;
-}
-
 /**
  * Edit a single event
  */
-export const editEvent = async (
-  editEventOptions: EditEventOptions,
-): Promise<SuccessResponse | FailureResponse> => {
+export const editEvent = async (editEventOptions: EditEventOptions) => {
   const { id, ...editableProperties } = editEventOptions;
   try {
-    const response = await axiosInstance.put(`${baseRoute}/${id}`, {
+    const response = await axiosInstance.put<BaseEvent>(`${baseRoute}/${id}`, {
       ...editableProperties,
     });
     return {

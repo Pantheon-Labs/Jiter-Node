@@ -6,6 +6,5 @@
     "vscode-extension",
     ".vscode",
     ".prettier*"
-  ],
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  ]
 }
