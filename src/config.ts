@@ -18,7 +18,7 @@ export interface JiterInit {
  */
 export const init: JiterInit = (jiterConfigOptions) => {
   jiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
-  if (!jiterConfig.apiKey) throw new Error('Invalid API key');
+  if (!jiterConfig.apiKey?.trim()) throw new Error('Invalid API Key');
 };
 
 /**
