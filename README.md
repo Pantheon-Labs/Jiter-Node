@@ -22,7 +22,6 @@ npm i @jiter/node
 # or
 
 yarn add @jiter/node
-
 ```
 
 ---
