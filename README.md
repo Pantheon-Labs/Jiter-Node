@@ -10,7 +10,7 @@
 
 The official Node SDK for Jiter
 
-#### 🔎 Looking for API Docs? Check out [`docs.jiter.dev`](https://docs.jiter.dev)
+<!-- #### 🔎 Looking for API Docs? Check out [`docs.jiter.dev`](https://docs.jiter.dev) -->
 
 ## Getting Started
 
