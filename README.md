@@ -9,3 +9,62 @@
 # `@jiter/node`
 
 The official Node SDK for Jiter
+
+#### 🔎 Looking for API Docs? Check out [`docs.jiter.dev`](https://docs.jiter.dev)
+
+## Getting Started
+
+### 1️⃣ Install the Package
+
+```shell
+npm i @jiter/node
+
+# or
+
+yarn @jiter/node
+
+```
+
+---
+
+### 2️⃣ Initialize Jiter
+
+```typescript
+import Jiter, { JiterConfig } from '@jiter/node';
+
+const config: JiterConfig = { apiKey: 'YOUR_API_KEY' };
+Jiter.init(config);
+```
+
+🔐 _Do not to include your API key in code; use a package like [`dotenv`](https://www.npmjs.com/package/dotenv) to securely load your token via `process.env`_
+
+<details>
+<summary>JavaScript example</summary>
+
+```javascript
+const Jiter = require('@jiter/node');
+
+Jiter.init({ apiKey: 'YOUR_API_KEY' });
+```
+
+</details>
+
+---
+
+### 3️⃣ Make Your First Event
+
+```typescript
+const fifteenMinutesFromNow = new Date(Date.now() + 1000 * 60 * 15);
+
+try {
+  const createdEvent = await Jiter.Events.createEvent({
+    destination: `${YOUR_API_URL}/webhooks/jiter",
+    payload: "Hello there!",
+    scheduledTime: fifteenMinutesFromNow.toISOString(),
+  });
+
+  console.log(createdEvent);
+} catch (error) {
+  console.error(error);
+}
+```
