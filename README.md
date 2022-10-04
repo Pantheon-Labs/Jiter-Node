@@ -21,8 +21,7 @@ npm i @jiter/node
 
 # or
 
-yarn @jiter/node
-
+yarn add @jiter/node
 ```
 
 ---
@@ -58,8 +57,8 @@ const fifteenMinutesFromNow = new Date(Date.now() + 1000 * 60 * 15);
 
 try {
   const createdEvent = await Jiter.Events.createEvent({
-    destination: `${YOUR_API_URL}/webhooks/jiter",
-    payload: "Hello there!",
+    destination: `${YOUR_API_URL}/webhooks/jiter`,
+    payload: 'Hello there!',
     scheduledTime: fifteenMinutesFromNow.toISOString(),
   });
 
