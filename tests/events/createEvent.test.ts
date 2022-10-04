@@ -1,0 +1,26 @@
+import Jiter, { BaseEvent } from '../../src';
+import { baseRoute } from '../../src/events/consts';
+import { mockGetAxios } from '../testUtils/getAxiosMock';
+
+const getAxiosMock = mockGetAxios();
+
+describe('Events.createEvent', () => {
+  it('creates an event in an hour', async () => {
+    const mockData: Partial<BaseEvent> = { id: 'hello world' };
+    getAxiosMock.post.mockReturnValueOnce({ data: mockData });
+
+    const createEventOptions = {
+      payload: 'beep',
+      scheduledTime: new Date(Date.now() + 800).toISOString(),
+      destination: 'asd',
+    };
+    const response = await Jiter.Events.createEvent(createEventOptions);
+
+    expect(getAxiosMock.post).toHaveBeenCalledTimes(1);
+    expect(getAxiosMock.post).toHaveBeenCalledWith(
+      baseRoute,
+      expect.objectContaining({ ...createEventOptions }),
+    );
+    expect(response).toBe(mockData);
+  });
+});
