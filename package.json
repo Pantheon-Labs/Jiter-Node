@@ -8,7 +8,6 @@
   "repository": "https://github.com/Pantheon-Labs/jiter-node.git",
   "author": "Pantheon Labs",
   "license": "Apache-2.0",
-  "private": "false",
   "keywords": [
     "Jiter",
     "cron",
@@ -19,9 +18,9 @@
     "sdk"
   ],
   "scripts": {
-    "build": "tsc --pretty",
+    "build": "tsc",
     "build:watch": "yarn build --watch",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "test": "yarn jest",
     "test:coverage": "yarn test --coverage",
     "lint": "eslint \"src/**/*.ts\" --max-warnings 0",
