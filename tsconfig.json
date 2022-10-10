@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "noEmitOnError": true,
+    "declaration": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["esnext", "esnext.asynciterable"],
@@ -17,5 +18,5 @@
     "experimentalDecorators": true
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules", "tests"]
+  "exclude": ["node_modules", "lib", "**/*/types/**/*"]
 }

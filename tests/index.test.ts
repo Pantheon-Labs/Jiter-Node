@@ -1,9 +1,14 @@
-import { hello } from '../src/index';
+import Jiter, { init, createEvent } from '../src';
 
-describe('index', () => {
-  describe('hello export', () => {
-    it('is correct', async () => {
-      expect(hello).toEqual('world');
-    });
+describe('module exports', () => {
+  it('exports methods as named exports', () => {
+    expect(init).toBeDefined();
+    expect(createEvent).toBeDefined();
+  });
+
+  it('exports methods as default exports', () => {
+    expect(Jiter).toBeDefined();
+    expect(Jiter.init).toBeDefined();
+    expect(Jiter.Events).toBeDefined();
   });
 });

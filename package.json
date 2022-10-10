@@ -1,5 +1,5 @@
 {
-  "name": "jiter-node",
+  "name": "@jiter/node",
   "version": "0.1.0",
   "description": "The official Node SDK for Jiter",
   "main": "./lib/index.js",
@@ -19,8 +19,9 @@
     "sdk"
   ],
   "scripts": {
-    "build": "tsc --pretty",
-    "typecheck": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "yarn build --watch",
+    "typecheck": "yarn build --noEmit",
     "test": "yarn jest",
     "test:coverage": "yarn test --coverage",
     "lint": "eslint \"src/**/*.ts\" --max-warnings 0",

@@ -1,7 +1,20 @@
-import axios from 'axios';
-import { DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
+import axios, { AxiosInstance } from 'axios';
+import { getJiterConfig } from './config';
 
-export const axiosInstance = axios.create({
-  baseURL: DEFAULT_URL,
-  timeout: DEFAULT_TIMEOUT,
-});
+let axiosInstance: AxiosInstance;
+
+export const getAxios = (): AxiosInstance => {
+  if (axiosInstance) return axiosInstance;
+
+  const config = getJiterConfig();
+
+  axiosInstance = axios.create({
+    baseURL: config.baseUrl,
+    timeout: config.timeout,
+    headers: {
+      'x-api-key': config.apiKey,
+    },
+  });
+
+  return axiosInstance;
+};

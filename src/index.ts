@@ -1,4 +1,13 @@
-export * from './middleware';
+import * as Events from './events';
+import { init } from './config';
+
+export * from './events';
+export { init } from './config';
 export * from './types';
 
-export const hello = 'world';
+const Jiter = {
+  Events,
+  init,
+};
+
+export default Jiter;

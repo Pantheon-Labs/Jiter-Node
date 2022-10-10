@@ -1,5 +1,6 @@
 .next
 .gitkeep
-dist
+lib
 coverage
 .github/*_TEMPLATE*
+.github/CODEOWNERS

@@ -8,3 +8,5 @@ coverage
 *.swn
 *.swm
 *.swo
+
+lib

@@ -1,0 +1,10 @@
+node_modules
+src
+tests
+.vscode
+.github
+.eslintrc
+.prettierignore
+.prettierrc
+tsconfig.json
+jest.config.json

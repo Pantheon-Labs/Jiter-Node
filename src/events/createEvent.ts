@@ -1,20 +1,12 @@
-import { AxiosError } from 'axios';
-import { axiosInstance } from '../axios';
+import { getAxios } from '../axios';
+import { baseRoute } from './consts';
+import { BaseEvent } from './types/BaseEvent';
+import { CreateEventOptions } from './types/CreateEventOptions';
 
-const baseRoute = '/events';
-
-export type CreateEventProps = {
-  // TODO: other properties
-  payload: string;
-};
-
-// TODO: Example
-export const createEvent = async ({ payload }: CreateEventProps) => {
-  try {
-    const response = await axiosInstance.post(baseRoute, { payload });
-    return response;
-  } catch (err) {
-    const error = err as AxiosError;
-    return error;
-  }
+/**
+ * Create an event
+ */
+export const createEvent = async (createEventOptions: CreateEventOptions) => {
+  const response = await getAxios().post<BaseEvent>(baseRoute, { ...createEventOptions });
+  return response.data;
 };
