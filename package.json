@@ -19,9 +19,9 @@
     "sdk"
   ],
   "scripts": {
-    "build": "tsc --pretty",
+    "build": "tsc -p tsconfig.build.json",
     "build:watch": "yarn build --watch",
-    "typecheck": "tsc",
+    "typecheck": "yarn build --noEmit",
     "test": "yarn jest",
     "test:coverage": "yarn test --coverage",
     "lint": "eslint \"src/**/*.ts\" --max-warnings 0",

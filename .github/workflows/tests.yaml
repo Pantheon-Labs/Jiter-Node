@@ -28,3 +28,9 @@ jobs:
 
       - name: Run Test Coverage
         run: yarn test:coverage
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/coverage-final.json

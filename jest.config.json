@@ -3,6 +3,8 @@
   "testEnvironment": "node",
   "moduleFileExtensions": ["js", "json", "ts"],
   "testMatch": ["**/*.test.ts"],
+  "setupFilesAfterEnv": ["./tests/setupTests.ts"],
+  "coveragePathIgnorePatterns": ["/tests"],
   "coverageThreshold": {
     "global": {
       "statements": 0,
