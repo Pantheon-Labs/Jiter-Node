@@ -14,7 +14,7 @@
   },
   "parserOptions": {
     "ecmaVersion": 2018,
-    "project": "./tsconfig.json"
+    "project": ["./tsconfig.json", "./tsconfig.tests.json", "./example/tsconfig.json"]
   },
   "ignorePatterns": ["node_modules", "/lib", "**/*.js", "coverage"],
   "rules": {
