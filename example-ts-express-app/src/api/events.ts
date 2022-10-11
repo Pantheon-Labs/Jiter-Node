@@ -1,0 +1,61 @@
+import { Request, Response, Router } from 'express';
+import { createEvent, editEvent, EventStatus, getEvent, getManyEvents } from '@jiter/node';
+
+export const events = Router();
+
+// See https://docs.jiter.dev/docs/rest-api/get-many-events
+events.get('/', async (req: Request, res: Response) => {
+  try {
+    const allEvents = await getManyEvents();
+    res.send(allEvents);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// See https://docs.jiter.dev/docs/rest-api/get-event-info
+events.get('/:id', async (req: Request, res: Response) => {
+  try {
+    const event = await getEvent({
+      id: req.params.id,
+    });
+    res.send(event);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// See https://docs.jiter.dev/docs/rest-api/create-event
+events.post('/', async (req: Request, res: Response) => {
+  const twentyMinutesFromNow = new Date(Date.now() + 1000 * 60 * 20);
+  try {
+    const createdEvent = await createEvent({
+      destination: `${process.env.BASE_URL}/webhooks/jiter`,
+      payload: JSON.stringify({
+        action: 'buyGroceries',
+        values: ['eggs', 'bacon', 'pasta', 'bread'],
+      }),
+      scheduledTime: twentyMinutesFromNow.toISOString(),
+    });
+    res.send(createdEvent);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// See https://docs.jiter.dev/docs/rest-api/update-event
+events.put('/:id', async (req: Request, res: Response) => {
+  try {
+    const updatedEvent = await editEvent({
+      id: req.params.id,
+      payload: JSON.stringify({
+        action: 'returnGroceries',
+        values: [{ bacon: 'Too addictive' }, { eggs: 'Break too easily' }],
+      }),
+      status: EventStatus.Cancelled,
+    });
+    res.send(updatedEvent);
+  } catch (error) {
+    console.error(error);
+  }
+});

@@ -3,11 +3,9 @@ import { createHmac } from 'crypto';
 
 export const jiterWebhookEvent = Router();
 
-jiterWebhookEvent.post('', (req, res) => {
+jiterWebhookEvent.post('/jiter', (req, res) => {
   const parsedPayload = JSON.parse(req.body.payload);
   const jiterSignature = req.header('Jiter-Signature');
-
-  console.log('Type of req body', typeof req.body.payload);
 
   const mySignature = createHmac('sha256', `${process.env.JITER_SIGNING_SECRET}`)
     .update(req.body.payload)
