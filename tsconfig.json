@@ -18,5 +18,5 @@
     "experimentalDecorators": true
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules", "lib", "**/*/types/**/*"]
+  "exclude": ["node_modules", "lib", "**/*/types/**/*", "example*"]
 }
