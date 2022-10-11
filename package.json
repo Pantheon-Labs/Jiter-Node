@@ -1,6 +1,6 @@
 {
   "name": "@jiter/node",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "The official Node SDK for Jiter",
   "main": "./lib/index.js",
   "homepage": "https://jiter.dev",

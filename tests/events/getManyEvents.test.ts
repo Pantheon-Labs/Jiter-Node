@@ -15,7 +15,7 @@ describe('Events.getManyEvents', () => {
     getAxiosMock.get.mockReturnValueOnce({ data: mockResponseData });
 
     const eventData: GetManyEventsOptions = {
-      scheduledEndTime: new Date().toISOString(),
+      scheduledEndDate: new Date().toISOString(),
       status: EventStatus.Sent,
     };
 
