@@ -21,6 +21,7 @@ type FilterableProperties = {
    * An ISO timestamp in the _past_ to get any events sent **after** this time.
    *
    * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
    */
   sentAtStartDate: string;
 
@@ -28,6 +29,7 @@ type FilterableProperties = {
    * An ISO timestamp in the _past_ to get any events sent **before** this time.
    *
    * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
    */
   sentAtEndDate: string;
 
@@ -35,6 +37,7 @@ type FilterableProperties = {
    * An ISO timestamp in the _past_ to get any events that failed **after** this time.
    *
    * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
    */
   failedAtStartDate: string;
 
@@ -42,6 +45,7 @@ type FilterableProperties = {
    * An ISO timestamp in the _past_ to get any events that failed **before** this time.
    *
    * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
    */
   failedAtEndDate: string;
 };
