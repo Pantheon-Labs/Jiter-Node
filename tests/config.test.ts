@@ -14,10 +14,12 @@ describe('config', () => {
         const { init, getJiterConfig } = require('../src/config') as ConfigModule;
 
         const apiKey = 'no hax pls';
-        init({ apiKey });
+        const signingSecret = 'seriously, pls no hax';
+        init({ apiKey, signingSecret });
 
         const config = getJiterConfig();
         expect(config.apiKey).toEqual(apiKey);
+        expect(config.signingSecret).toEqual(signingSecret);
         expect(config.baseUrl).toEqual(DEFAULT_URL);
         expect(config.timeout).toEqual(DEFAULT_TIMEOUT);
       });
@@ -30,10 +32,22 @@ describe('config', () => {
       });
     });
 
+    it('throws if an api key is not provided', () => {
+      jest.isolateModules(() => {
+        const { init } = require('../src/config');
+        expect(() => init({ apiKey: 'come on in' })).toThrow('Invalid Signing Secret');
+      });
+    });
+
     it('throws if an api key is just whitespace', () => {
       jest.isolateModules(() => {
         const { init } = require('../src/config') as ConfigModule;
-        expect(() => init({ apiKey: '       ' })).toThrow('Invalid API Key');
+        expect(() => init({ apiKey: '       ', signingSecret: 'maple' })).toThrow(
+          'Invalid API Key',
+        );
+        expect(() => init({ apiKey: 'syrup', signingSecret: '       ' })).toThrow(
+          'Invalid Signing Secret',
+        );
       });
     });
 
@@ -42,12 +56,14 @@ describe('config', () => {
         const { init, getJiterConfig } = require('../src/config') as ConfigModule;
 
         const apiKey = 'no hax pls';
+        const signingSecret = 'no hax pls x2';
         const overrideBaseUrl = 'seriously, no hax pls';
         const overrideTimeout = 1337;
-        init({ apiKey, baseUrl: overrideBaseUrl, timeout: overrideTimeout });
+        init({ apiKey, signingSecret, baseUrl: overrideBaseUrl, timeout: overrideTimeout });
 
         const config = getJiterConfig();
         expect(config.apiKey).toEqual(apiKey);
+        expect(config.signingSecret).toEqual(signingSecret);
         expect(config.baseUrl).toEqual(overrideBaseUrl);
         expect(config.timeout).toEqual(overrideTimeout);
       });
@@ -66,7 +82,7 @@ describe('config', () => {
     it('uses a cached config if one exists', () => {
       jest.isolateModules(() => {
         const { init, getJiterConfig } = require('../src/config') as ConfigModule;
-        init({ apiKey: 'let me in' });
+        init({ apiKey: 'let me in', signingSecret: 'password123' });
 
         const configOne = getJiterConfig();
         const configTwo = getJiterConfig();

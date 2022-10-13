@@ -8,6 +8,7 @@ import {
   WebhookHandlerParsedCallback,
   WebhookHandlerArgs,
 } from '../types';
+import { signatureIsValid } from '../utils';
 
 function isParsed<T extends JiterEventObjectPayload>(
   callback: WebhookHandlerArgs<T>[0],
@@ -27,19 +28,22 @@ interface WebhookHandler {
 
 export const handleWebhook: WebhookHandler =
   <T extends JiterEventObjectPayload = never>(...args: WebhookHandlerArgs<T>): Handler =>
-  (req, res) => {
+  (req, res, next) => {
     const [callback, options] = args;
 
     const signature = req.header(SIGNATURE_HEADER);
+    if (!signature) {
+      res.sendStatus(401);
+      return;
+    }
+
     const { payload: rawPayload, scheduledTime: rawScheduledTime } = req.body as Record<
       string,
       string
     >;
 
-    // TODO: Validate signature
-    const signatureIsValid = true;
-
-    if (!signature || !signatureIsValid) {
+    const isValid = signatureIsValid({ signature, body: req.body });
+    if (!isValid) {
       res.sendStatus(401);
       return;
     }
@@ -50,46 +54,13 @@ export const handleWebhook: WebhookHandler =
     if (isParsed(callback, options)) {
       try {
         const payload = JSON.parse(rawPayload);
-        callback({ payload, scheduledTime, req });
+        void callback({ payload, scheduledTime, req, next });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Failed to parse Jiter event payload: ', error);
       }
-      console.log(options, callback);
       return;
     }
-    console.log(options, callback);
 
-    callback({ payload: rawPayload, scheduledTime, req });
+    void callback({ payload: rawPayload, scheduledTime, req, next });
   };
-
-// type SomeEvent = {
-//   thing: boolean;
-//   otherThing: string;
-// };
-
-// type MyEvent = {
-//   wat: boolean;
-//   thing: 'yes';
-// };
-
-// const handler1 = handleWebhook<MyEvent>(
-//   (event) => {
-//     event.payload;
-//   },
-//   { parse: true },
-// );
-// const handler4 = handleWebhook<MyEvent>(
-//   (event) => {
-//     event.payload.thing;
-//   },
-//   { parse: true },
-// );
-// const handler2 = handleWebhook((event) => {
-//   event.payload;
-// });
-// const handler3 = handleWebhook(
-//   (event) => {
-//     event.payload;
-//   },
-//   { parse: false },
-// );

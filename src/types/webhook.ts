@@ -1,4 +1,4 @@
-import type { Request } from 'express';
+import type { NextFunction, Request } from 'express';
 
 export type WebhookHandlerOptions = {
   parse: false;
@@ -12,10 +12,11 @@ export type JiterEventObjectPayload = Record<any, any>;
 export type JiterEventStringPayload = string;
 export type JiterEventPayload = JiterEventObjectPayload | JiterEventStringPayload;
 
-export type JiterWebhookEvent<T extends JiterEventPayload> = {
+export type JiterWebhookEvent<T extends JiterEventPayload = Record<string, any>> = {
   req: Request;
   scheduledTime: Date;
   payload: T;
+  next: NextFunction;
 };
 
 export type WebhookHandlerParsedCallback<T extends JiterEventObjectPayload> = (
