@@ -39,4 +39,23 @@ describe('Events.getManyEvents', () => {
     expect(getAxiosMock.get).toHaveBeenCalledWith(`${eventsPath}`);
     expect(response).toBe(mockResponseData);
   });
+
+  it('correctly parses an array of statuses', async () => {
+    const id = '1337';
+    const mockResponseData: Partial<BaseEvent>[] = [{ id }];
+    getAxiosMock.get.mockReturnValueOnce({ data: mockResponseData });
+
+    const eventData: GetManyEventsOptions = {
+      scheduledEndDate: new Date().toISOString(),
+      status: [EventStatus.Sent, EventStatus.Pending],
+    };
+
+    const expectedQueryString = new URLSearchParams(eventData).toString();
+
+    const response = await Jiter.Events.getManyEvents(eventData);
+
+    expect(getAxiosMock.get).toHaveBeenCalledTimes(1);
+    expect(getAxiosMock.get).toHaveBeenCalledWith(`${eventsPath}?${expectedQueryString}`);
+    expect(response).toBe(mockResponseData);
+  });
 });
