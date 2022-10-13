@@ -1,5 +1,5 @@
 import { getAxios } from '../axios';
-import { baseRoute } from './consts';
+import { eventsPath } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 import { GetManyEventsOptions } from './types/GetManyEventsOptions';
 
@@ -10,11 +10,20 @@ import { GetManyEventsOptions } from './types/GetManyEventsOptions';
  * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
  */
 export const getManyEvents = async (getManyEventsOptions?: GetManyEventsOptions) => {
-  const query = getManyEventsOptions
-    ? new URLSearchParams(getManyEventsOptions).toString()
-    : undefined;
-  const queryString = query ? `?${query}` : '';
-  const baseUrl = `${baseRoute}${queryString}`;
+  let queryString = '';
+  if (getManyEventsOptions) {
+    const { status, ...options } = getManyEventsOptions;
+
+    const query: Record<string, string> = {
+      ...options,
+    };
+    if (status) {
+      query.status = Array.isArray(status) ? status.toString() : status;
+    }
+    queryString = new URLSearchParams(query).toString();
+  }
+
+  const baseUrl = `${eventsPath}${queryString}`;
 
   const response = await getAxios().get<BaseEvent[]>(baseUrl);
   return response.data;

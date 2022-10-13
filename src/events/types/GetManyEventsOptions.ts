@@ -5,7 +5,7 @@ type FilterableProperties = {
    * Filter events based on status
    * See {@link EventStatus}
    */
-  status: EventStatus;
+  status: EventStatus | EventStatus[];
 
   /**
    * An ISO timestamp in the _future_ to get any events scheduled **after** this time
