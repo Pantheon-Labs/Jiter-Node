@@ -1,7 +1,7 @@
 {
   "name": "@jiter/example-ts-express-app",
   "version": "0.1.0",
-  "description": "Example integration of Jiter into express",
+  "description": "Example integration of Jiter and Express",
   "main": "./lib/index.js",
   "homepage": "https://jiter.dev",
   "typings": "./lib/index.d.ts",

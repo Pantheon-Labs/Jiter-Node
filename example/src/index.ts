@@ -14,6 +14,13 @@ export const init = (async () => {
 
   app.use(express.json());
 
+  app.get('/', (req, res) =>
+    res.json({
+      message:
+        'Welcome to the Jiter & Express TS example, checkout the /events and /webhooks endpoints!',
+    }),
+  );
+
   app.use('/api', api);
 
   app.listen(port, () => {

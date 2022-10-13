@@ -16,9 +16,10 @@ jiterWebhookEvent.post('/jiter', (req, res) => {
     return;
   }
 
+  res.sendStatus(200);
+
+  // Now that the event was verified and a response was sent, you can continue with the payload:
   if (parsedPayload.action === 'buyGroceries') {
     console.log('Purchased the following groceries:', parsedPayload.values);
   }
-
-  res.sendStatus(200);
 });

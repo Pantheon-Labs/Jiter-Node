@@ -8,8 +8,10 @@ events.get('/', async (req: Request, res: Response) => {
   try {
     const allEvents = await getManyEvents();
     res.send(allEvents);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    const { message } = error.response.data;
+    res.status(error.status).json({ message, error });
   }
 });
 
@@ -20,8 +22,10 @@ events.get('/:id', async (req: Request, res: Response) => {
       id: req.params.id,
     });
     res.send(event);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    const { message } = error.response.data;
+    res.status(error.status).json({ message, error });
   }
 });
 
@@ -38,8 +42,10 @@ events.post('/', async (req: Request, res: Response) => {
       scheduledTime: twentyMinutesFromNow.toISOString(),
     });
     res.send(createdEvent);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    const { message } = error.response.data;
+    res.status(error.status).json({ message, error });
   }
 });
 
@@ -55,7 +61,9 @@ events.put('/:id', async (req: Request, res: Response) => {
       status: EventStatus.Cancelled,
     });
     res.send(updatedEvent);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    const { message } = error.response.data;
+    res.status(error.status).json({ message, error });
   }
 });
