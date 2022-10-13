@@ -23,8 +23,8 @@ export const getManyEvents = async (getManyEventsOptions?: GetManyEventsOptions)
     queryString = new URLSearchParams(query).toString();
   }
 
-  const baseUrl = `${eventsPath}?${queryString}`;
+  const url = queryString ? `${eventsPath}?${queryString}` : eventsPath;
 
-  const response = await getAxios().get<BaseEvent[]>(baseUrl);
+  const response = await getAxios().get<BaseEvent[]>(url);
   return response.data;
 };
