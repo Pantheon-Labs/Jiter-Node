@@ -4,7 +4,7 @@
 [![Tests](https://github.com/Pantheon-Labs/Jiter-Node/actions/workflows/tests.yaml/badge.svg)](https://github.com/Pantheon-Labs/Jiter-Node/actions/workflows/tests.yaml)
 [![CodeQL](https://github.com/Pantheon-Labs/Jiter-Node/actions/workflows/codeql.yml/badge.svg)](https://github.com/Pantheon-Labs/Jiter-Node/actions/workflows/codeql.yml)
 [![codecov](https://codecov.io/gh/Pantheon-Labs/Jiter-Node/branch/main/graph/badge.svg?token=ATLT7VEAAE)](https://codecov.io/gh/Pantheon-Labs/Jiter-Node)
-[![npm version](https://badge.fury.io/js/@jiter%2Fnode.svg)](https://badge.fury.io/js/@jiter%2Fnode)
+![npm version](https://img.shields.io/npm/v/@jiter/node?color=%232aad48)
 
 # `@jiter/node`
 
