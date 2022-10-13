@@ -1,5 +1,5 @@
 import Jiter, { BaseEvent, EventStatus, GetManyEventsOptions } from '../../src';
-import { baseRoute } from '../../src/events/consts';
+import { eventsPath } from '../../src/events/consts';
 import { mockGetAxios } from '../testUtils/getAxiosMock';
 
 const getAxiosMock = mockGetAxios();
@@ -24,7 +24,7 @@ describe('Events.getManyEvents', () => {
     const response = await Jiter.Events.getManyEvents(eventData);
 
     expect(getAxiosMock.get).toHaveBeenCalledTimes(1);
-    expect(getAxiosMock.get).toHaveBeenCalledWith(`${baseRoute}?${expectedQueryString}`);
+    expect(getAxiosMock.get).toHaveBeenCalledWith(`${eventsPath}?${expectedQueryString}`);
     expect(response).toBe(mockResponseData);
   });
 
@@ -36,7 +36,7 @@ describe('Events.getManyEvents', () => {
     const response = await Jiter.Events.getManyEvents();
 
     expect(getAxiosMock.get).toHaveBeenCalledTimes(1);
-    expect(getAxiosMock.get).toHaveBeenCalledWith(`${baseRoute}`);
+    expect(getAxiosMock.get).toHaveBeenCalledWith(`${eventsPath}`);
     expect(response).toBe(mockResponseData);
   });
 });
