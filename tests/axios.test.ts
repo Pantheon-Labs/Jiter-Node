@@ -10,6 +10,7 @@ const mockConfig: JiterConfigInstance = {
   signingSecret: 'pancakes',
   timeout: 1337,
   baseUrl: 'outer space',
+  millisecondsUntilWebhookExpiration: 1000,
 };
 
 describe('axios instance', () => {
