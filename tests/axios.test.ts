@@ -7,6 +7,7 @@ const getJiterConfigMock = getMock(getJiterConfig);
 
 const mockConfig: JiterConfigInstance = {
   apiKey: 'waffles',
+  signingSecret: 'pancakes',
   timeout: 1337,
   baseUrl: 'outer space',
 };
