@@ -1,5 +1,4 @@
 import type { Handler } from 'express';
-import { getJiterConfig } from '../config';
 import { REQUEST_TIMESTAMP_HEADER, SIGNATURE_HEADER } from '../consts';
 import {
   WebhookHandlerCallback,
@@ -30,16 +29,12 @@ interface WebhookHandler {
 export const webhookHandler: WebhookHandler =
   <T extends JiterEventObjectPayload = never>(...args: WebhookHandlerArgs<T>): Handler =>
   (req, res, next) => {
-    const { millisecondsUntilWebhookExpiration } = getJiterConfig();
-
     const [callback, options] = args;
 
     const signature = req.header(SIGNATURE_HEADER);
     const requestTimestamp = req.header(REQUEST_TIMESTAMP_HEADER);
-    const timeSinceRequest = Math.abs(new Date().getTime() - Number(Number(requestTimestamp)));
-    const isExpired = timeSinceRequest > millisecondsUntilWebhookExpiration;
 
-    if (!signature || !requestTimestamp || Number.isNaN(timeSinceRequest) || isExpired) {
+    if (!signature || !requestTimestamp) {
       res.sendStatus(401);
       return;
     }

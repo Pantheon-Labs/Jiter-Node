@@ -12,7 +12,7 @@ describe('Events.createEvent', () => {
     const createEventOptions = {
       payload: 'beep',
       scheduledTime: new Date(Date.now() + 800).toISOString(),
-      destination: 'asd',
+      destination: 'https://your.app/webhooks',
     };
     const response = await Jiter.Events.createEvent(createEventOptions);
 

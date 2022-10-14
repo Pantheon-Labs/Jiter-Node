@@ -12,8 +12,15 @@ export const signatureIsValid: (args: SignatureIsValidArgs) => boolean = ({
   requestTimestamp,
   body: rawBody,
 }) => {
-  const { signingSecret } = getJiterConfig();
+  const { signingSecret, millisecondsUntilWebhookExpiration } = getJiterConfig();
   const body = typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody);
+
+  const timeSinceRequest = Math.abs(Date.now() - Number(Number(requestTimestamp)));
+  if (Number.isNaN(timeSinceRequest))
+    throw new Error('Invalid request timestamp; request timestamp must be a valid number');
+
+  const isExpired = timeSinceRequest > millisecondsUntilWebhookExpiration;
+  if (isExpired) throw new Error('Expired request; time since request since request exceeds limit');
 
   if (!body.trim()) throw new Error('Invalid body; body cannot be empty');
   if (!requestSignature.trim()) throw new Error('Invalid signature; signature cannot be empty');
