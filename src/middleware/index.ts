@@ -1,1 +1,1 @@
-export * from './validateWebhook';
+export * from './webhookHandler';

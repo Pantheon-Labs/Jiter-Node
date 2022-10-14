@@ -1,16 +1,28 @@
 import { Request, Response } from 'express';
 import { JiterWebhookEvent } from '../../src';
-import { SIGNATURE_HEADER } from '../../src/consts';
-import { handleWebhook } from '../../src/middleware/validateWebhook';
+import { getJiterConfig } from '../../src/config';
+import {
+  DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS,
+  REQUEST_TIMESTAMP_HEADER,
+  SIGNATURE_HEADER,
+} from '../../src/consts';
+import { webhookHandler } from '../../src/middleware/webhookHandler';
+import { JiterConfigInstance } from '../../src/types/config';
 import { signatureIsValid } from '../../src/utils/signatureIsValid';
 import { getMock } from '../testUtils/getMock';
 
 const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
 jest.mock('../../src/utils/signatureIsValid');
-
 const mockSignatureIsValid = getMock(signatureIsValid);
 mockSignatureIsValid.mockReturnValue(true);
+
+jest.mock('../../src/config.ts');
+const mockGetJiterConfig = getMock(getJiterConfig);
+const mockConfig: Pick<JiterConfigInstance, 'millisecondsUntilWebhookExpiration'> = {
+  millisecondsUntilWebhookExpiration: DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS,
+};
+mockGetJiterConfig.mockReturnValue(mockConfig as JiterConfigInstance);
 
 const mockRes: Pick<Response, 'sendStatus'> = {
   sendStatus: jest.fn(),
@@ -20,7 +32,12 @@ const mockNext = jest.fn();
 
 type MockRequest = Pick<Request, 'header' | 'body'>;
 const mockSignature = 'this payload is totally legit';
-const mockHeaderMethod = jest.fn().mockReturnValue(mockSignature);
+const mockRequestTimestamp = new Date().getTime();
+const mockHeaderMethod = jest
+  .fn()
+  .mockImplementation((header) =>
+    header === SIGNATURE_HEADER ? mockSignature : String(mockRequestTimestamp),
+  );
 
 describe('validateWebhook middleware', () => {
   beforeEach(() => {
@@ -32,11 +49,12 @@ describe('validateWebhook middleware', () => {
       body: {},
       header: mockHeaderMethod,
     };
-    handleWebhook(({ next }) => {
+    webhookHandler(({ next }) => {
       expect(next).toBe(mockNext);
     })(mockReq as Request, mockRes as Response, mockNext);
-    expect(mockHeaderMethod).toBeCalledTimes(1);
+    expect(mockHeaderMethod).toBeCalledTimes(2);
     expect(mockHeaderMethod).toBeCalledWith(SIGNATURE_HEADER);
+    expect(mockHeaderMethod).toBeCalledWith(REQUEST_TIMESTAMP_HEADER);
   });
 
   it('returns a 401 status if signature was not provided', () => {
@@ -47,7 +65,7 @@ describe('validateWebhook middleware', () => {
     mockHeaderMethod.mockReturnValueOnce(undefined);
 
     const mockCallback = jest.fn();
-    handleWebhook(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+    webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
 
     expect(mockCallback).not.toBeCalled();
     expect(mockRes.sendStatus).toBeCalledTimes(1);
@@ -63,7 +81,7 @@ describe('validateWebhook middleware', () => {
     mockSignatureIsValid.mockReturnValueOnce(false);
 
     const mockCallback = jest.fn();
-    handleWebhook(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+    webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
 
     expect(mockCallback).not.toBeCalled();
     expect(mockRes.sendStatus).toBeCalledTimes(1);
@@ -77,7 +95,7 @@ describe('validateWebhook middleware', () => {
     };
 
     const mockCallback = jest.fn();
-    handleWebhook(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+    webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
 
     expect(mockCallback).toBeCalledTimes(1);
     expect(mockRes.sendStatus).toBeCalledTimes(1);
@@ -96,7 +114,7 @@ describe('validateWebhook middleware', () => {
       };
 
       const mockCallback = jest.fn();
-      handleWebhook(mockCallback, { parse: true })(
+      webhookHandler(mockCallback, { parse: true })(
         mockReq as Request,
         mockRes as Response,
         mockNext,
@@ -120,7 +138,7 @@ describe('validateWebhook middleware', () => {
       };
 
       const mockCallback = jest.fn();
-      handleWebhook(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+      webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
 
       expect(mockCallback).toBeCalledTimes(1);
       const event: JiterWebhookEvent = mockCallback.mock.calls[0][0];
@@ -140,7 +158,7 @@ describe('validateWebhook middleware', () => {
       };
 
       const mockCallback = jest.fn();
-      handleWebhook(mockCallback, { parse: true })(
+      webhookHandler(mockCallback, { parse: true })(
         mockReq as Request,
         mockRes as Response,
         mockNext,
