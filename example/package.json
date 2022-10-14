@@ -14,7 +14,7 @@
     "typecheck": "yarn build --noEmit"
   },
   "dependencies": {
-    "@jiter/node": "^0.3.0",
+    "@jiter/node": "0.3.0-beta.2",
     "dotenv": "^16.0.3",
     "express": "^4.17.1"
   },
