@@ -1,13 +1,7 @@
 import { Request, Response } from 'express';
 import { JiterWebhookEvent } from '../../src';
-import { getJiterConfig } from '../../src/config';
-import {
-  DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS,
-  REQUEST_TIMESTAMP_HEADER,
-  SIGNATURE_HEADER,
-} from '../../src/consts';
+import { REQUEST_TIMESTAMP_HEADER, SIGNATURE_HEADER } from '../../src/consts';
 import { webhookHandler } from '../../src/middleware/webhookHandler';
-import { JiterConfigInstance } from '../../src/types/config';
 import { signatureIsValid } from '../../src/utils/signatureIsValid';
 import { getMock } from '../testUtils/getMock';
 
@@ -17,13 +11,6 @@ jest.mock('../../src/utils/signatureIsValid');
 const mockSignatureIsValid = getMock(signatureIsValid);
 mockSignatureIsValid.mockReturnValue(true);
 
-jest.mock('../../src/config.ts');
-const mockGetJiterConfig = getMock(getJiterConfig);
-const mockConfig: Pick<JiterConfigInstance, 'millisecondsUntilWebhookExpiration'> = {
-  millisecondsUntilWebhookExpiration: DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS,
-};
-mockGetJiterConfig.mockReturnValue(mockConfig as JiterConfigInstance);
-
 const mockRes: Pick<Response, 'sendStatus'> = {
   sendStatus: jest.fn(),
 };
@@ -32,7 +19,7 @@ const mockNext = jest.fn();
 
 type MockRequest = Pick<Request, 'header' | 'body'>;
 const mockSignature = 'this payload is totally legit';
-const mockRequestTimestamp = new Date().getTime();
+const mockRequestTimestamp = Date.now();
 const mockHeaderMethod = jest
   .fn()
   .mockImplementation((header) =>
