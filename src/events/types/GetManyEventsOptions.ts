@@ -2,29 +2,52 @@ import { EventStatus } from './EventStatus';
 
 type FilterableProperties = {
   /**
-   * Filter events that are scheduled to be sent after this ISO timestamp
+   * Filter events based on status
+   * See {@link EventStatus}
    */
-  scheduledStartTime: string;
+  status: EventStatus | EventStatus[];
 
   /**
-   * Filter events that are scheduled to be sent before this ISO timestamp
+   * An ISO timestamp in the _future_ to get any events scheduled **after** this time
    */
-  scheduledEndTime: string;
+  scheduledStartDate: string;
 
   /**
-   * Filter events that were created after this ISO timestamp
+   * An ISO timestamp in the _future_ to get any events scheduled **before** this time
    */
-  createdAtStartTime: string;
+  scheduledEndDate: string;
 
   /**
-   * Filter events that were created before this time
+   * An ISO timestamp in the _past_ to get any events sent **after** this time.
+   *
+   * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
    */
-  createdAtEndTime: string;
+  sentAtStartDate: string;
 
   /**
-   * Filter events  based on status
+   * An ISO timestamp in the _past_ to get any events sent **before** this time.
+   *
+   * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
    */
-  status: EventStatus;
+  sentAtEndDate: string;
+
+  /**
+   * An ISO timestamp in the _past_ to get any events that failed **after** this time.
+   *
+   * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
+   */
+  failedAtStartDate: string;
+
+  /**
+   * An ISO timestamp in the _past_ to get any events that failed **before** this time.
+   *
+   * By default, events will only be returned if this date is in the last 7 days.
+   * See {@link https://docs.jiter.dev/docs/quotas-and-limits/#events-searching---get-events--getmanyevents} for more info
+   */
+  failedAtEndDate: string;
 };
 
 export type GetManyEventsOptions = Partial<FilterableProperties>;

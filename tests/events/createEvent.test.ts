@@ -1,5 +1,5 @@
 import Jiter, { BaseEvent } from '../../src';
-import { baseRoute } from '../../src/events/consts';
+import { eventsPath } from '../../src/events/consts';
 import { mockGetAxios } from '../testUtils/getAxiosMock';
 
 const getAxiosMock = mockGetAxios();
@@ -18,7 +18,7 @@ describe('Events.createEvent', () => {
 
     expect(getAxiosMock.post).toHaveBeenCalledTimes(1);
     expect(getAxiosMock.post).toHaveBeenCalledWith(
-      baseRoute,
+      eventsPath,
       expect.objectContaining({ ...createEventOptions }),
     );
     expect(response).toBe(mockData);

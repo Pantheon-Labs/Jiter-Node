@@ -1,5 +1,5 @@
 import { getAxios } from '../axios';
-import { baseRoute } from './consts';
+import { eventsPath } from './consts';
 import { BaseEvent } from './types/BaseEvent';
 import { EditEventOptions } from './types/EditEventOptions';
 
@@ -8,7 +8,7 @@ import { EditEventOptions } from './types/EditEventOptions';
  */
 export const editEvent = async (editEventOptions: EditEventOptions) => {
   const { id, ...editableProperties } = editEventOptions;
-  const response = await getAxios().put<BaseEvent>(`${baseRoute}/${id}`, {
+  const response = await getAxios().put<BaseEvent>(`${eventsPath}/${id}`, {
     ...editableProperties,
   });
   return response.data;
