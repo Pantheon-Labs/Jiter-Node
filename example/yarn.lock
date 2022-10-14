@@ -9,10 +9,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@jiter/node@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@jiter/node/-/node-0.1.1.tgz#c8831802e77a158e1c3ff695609f309498fe8f57"
-  integrity sha512-jYrKffkNO9Fhr6cXPjhBEZx3h+qidzlc0aGkaTcXk8He9wd3htVGuiyQ/N0ExJQLVe/EzlFQTcyyb46P3DLDqA==
+"@jiter/node@0.3.0-beta.2":
+  version "0.3.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@jiter/node/-/node-0.3.0-beta.2.tgz#4d64afbdb3380bb376bf6fa3929acf3e0cbc9150"
+  integrity sha512-/EFtlKgV5mnxrHcwVZJCeY3TJzfff6GhBNY3WYtoJIkswkO7iwEe6tekKu/xEojSG9etr7Fz/D6xeETVVuyIAg==
   dependencies:
     axios "^0.27.2"
 

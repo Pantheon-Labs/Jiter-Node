@@ -10,7 +10,10 @@ const port = 8000;
 
 export const init = (async () => {
   // See https://docs.jiter.dev/docs/getting-started
-  Jiter.init({ apiKey: `${process.env.JITER_API_KEY}` });
+  Jiter.init({
+    apiKey: `${process.env.JITER_API_KEY}`,
+    signingSecret: `${process.env.JITER_SIGNING_SECRET}`,
+  });
 
   app.use(express.json());
 
