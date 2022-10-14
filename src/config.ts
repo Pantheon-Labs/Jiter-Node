@@ -1,9 +1,12 @@
-import { DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
+import { DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS, DEFAULT_TIMEOUT, DEFAULT_URL } from './consts';
 import { JiterConfig, JiterConfigInstance, OverrideJiterConfigOptions } from './types/config';
 
-const defaultConfigOptions: Required<Omit<JiterConfig, 'apiKey'> & OverrideJiterConfigOptions> = {
+const defaultConfigOptions: Required<
+  Omit<JiterConfig, 'apiKey' | 'signingSecret'> & OverrideJiterConfigOptions
+> = {
   baseUrl: DEFAULT_URL,
   timeout: DEFAULT_TIMEOUT,
+  millisecondsUntilWebhookExpiration: DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS,
 };
 
 let jiterConfig: JiterConfigInstance | undefined;
@@ -19,6 +22,7 @@ export interface JiterInit {
 export const init: JiterInit = (jiterConfigOptions) => {
   jiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
   if (!jiterConfig.apiKey?.trim()) throw new Error('Invalid API Key');
+  if (!jiterConfig.signingSecret?.trim()) throw new Error('Invalid Signing Secret');
 };
 
 /**
