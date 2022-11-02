@@ -4,13 +4,13 @@
   "description": "Example integration of Jiter and Express",
   "main": "./lib/index.js",
   "homepage": "https://jiter.dev",
-  "typings": "./lib/index.d.ts",
   "author": "Pantheon Labs",
   "license": "Apache-2.0",
   "scripts": {
+    "setup": "cp .env.sample .env && echo \"\n\n🎉 .env has been created; add your custom env values\n\n\"",
     "build": "tsc -p tsconfig.build.json --pretty",
     "start": "node dist/index.js",
-    "start:dev": "ts-node-dev --exit-child --watch .env --ignore-watch ../web/.next --files --rs --respawn src/index.ts",
+    "dev": "ts-node-dev --exit-child --watch .env --ignore-watch ../web/.next --files --rs --respawn src/index.ts",
     "typecheck": "yarn build --noEmit"
   },
   "dependencies": {
