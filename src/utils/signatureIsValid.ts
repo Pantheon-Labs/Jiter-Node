@@ -15,7 +15,7 @@ export const signatureIsValid: (args: SignatureIsValidArgs) => boolean = ({
   const { signingSecret, millisecondsUntilWebhookExpiration } = getJiterConfig();
   const body = typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody);
 
-  const timeSinceRequest = Math.abs(Date.now() - Number(Number(requestTimestamp)));
+  const timeSinceRequest = Math.abs(Date.now() - Number(requestTimestamp));
   if (Number.isNaN(timeSinceRequest))
     throw new Error('Invalid request timestamp; request timestamp must be a valid number');
 
