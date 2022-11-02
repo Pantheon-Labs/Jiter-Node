@@ -1,13 +1,17 @@
-import { createHmac } from 'crypto';
+import crypto from 'crypto';
 import { signatureIsValid } from '../../src';
 import { getJiterConfig } from '../../src/config';
 import { DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS } from '../../src/consts';
 import { JiterConfigInstance } from '../../src/types/config';
 import { getMock } from '../testUtils/getMock';
 
+const { createHmac: originalCreateHmac } = jest.requireActual('crypto');
+
 const signingSecret = 'super strong secret sentence';
 const createSignature = (requestTimestamp: string | number, body: string) =>
-  createHmac('sha256', signingSecret).update(`${requestTimestamp}:${body}`).digest('base64');
+  originalCreateHmac('sha256', signingSecret)
+    .update(`${requestTimestamp}:${body}`)
+    .digest('base64');
 
 const mockBody = {
   bestFood: 'waffles',
@@ -26,6 +30,8 @@ const mockConfig: Pick<
 };
 mockGetConfig.mockReturnValue(mockConfig as any);
 
+const createHmacSpy = jest.spyOn(crypto, 'createHmac');
+
 const dateNowSpy = jest.spyOn(Date, 'now');
 
 describe('signatureIsValid util method', () => {
@@ -42,6 +48,31 @@ describe('signatureIsValid util method', () => {
     expect(isValid).toEqual(true);
   });
 
+  it('creates a local signature with the appropriate values when body is a string', () => {
+    const requestTimestamp = Date.now().toString();
+    dateNowSpy.mockReturnValueOnce(Number(requestTimestamp));
+    const body = JSON.stringify(mockBody);
+    const signature = createSignature(requestTimestamp, body);
+
+    const mockHmac = {
+      update: jest.fn().mockReturnThis(),
+      digest: jest.fn().mockReturnValue(signature),
+    };
+    createHmacSpy.mockReturnValueOnce(mockHmac as any);
+
+    const isValid = signatureIsValid({ body, signature, requestTimestamp });
+    expect(isValid).toEqual(true);
+
+    expect(createHmacSpy).toBeCalledTimes(1);
+    expect(createHmacSpy).toHaveBeenCalledWith('sha256', signingSecret);
+
+    expect(mockHmac.update).toHaveBeenCalledTimes(1);
+    expect(mockHmac.update).toHaveBeenCalledWith(`${requestTimestamp}:${body}`);
+
+    expect(mockHmac.digest).toHaveBeenCalledTimes(1);
+    expect(mockHmac.digest).toHaveBeenCalledWith('base64');
+  });
+
   it('returns true for a valid signature when the body is an object', () => {
     const requestTimestamp = Date.now().toString();
     dateNowSpy.mockReturnValueOnce(Number(requestTimestamp));
@@ -52,6 +83,34 @@ describe('signatureIsValid util method', () => {
       requestTimestamp,
     });
     expect(isValid).toEqual(true);
+  });
+
+  it('creates a local signature with the appropriate values when body is an object', () => {
+    const requestTimestamp = Date.now().toString();
+    dateNowSpy.mockReturnValueOnce(Number(requestTimestamp));
+    const signature = createSignature(requestTimestamp, JSON.stringify(mockBody));
+
+    const mockHmac = {
+      update: jest.fn().mockReturnThis(),
+      digest: jest.fn().mockReturnValue(signature),
+    };
+    createHmacSpy.mockReturnValueOnce(mockHmac as any);
+
+    const isValid = signatureIsValid({
+      body: mockBody,
+      signature,
+      requestTimestamp,
+    });
+    expect(isValid).toEqual(true);
+
+    expect(createHmacSpy).toBeCalledTimes(1);
+    expect(createHmacSpy).toHaveBeenCalledWith('sha256', signingSecret);
+
+    expect(mockHmac.update).toHaveBeenCalledTimes(1);
+    expect(mockHmac.update).toHaveBeenCalledWith(`${requestTimestamp}:${JSON.stringify(mockBody)}`);
+
+    expect(mockHmac.digest).toHaveBeenCalledTimes(1);
+    expect(mockHmac.digest).toHaveBeenCalledWith('base64');
   });
 
   it('returns false for an invalid signature', () => {
