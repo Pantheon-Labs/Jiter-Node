@@ -19,7 +19,7 @@
     "sdk"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.json",
     "build:watch": "yarn build --watch",
     "typecheck": "yarn build --noEmit",
     "test": "yarn jest",
