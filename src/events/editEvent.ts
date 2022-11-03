@@ -8,8 +8,6 @@ import { EditEventOptions } from './types/EditEventOptions';
  */
 export const editEvent = async (editEventOptions: EditEventOptions) => {
   const { id, ...editableProperties } = editEventOptions;
-  const response = await getAxios().put<BaseEvent>(`${eventsPath}/${id}`, {
-    ...editableProperties,
-  });
+  const response = await getAxios().put<BaseEvent>(`${eventsPath}/${id}`, editableProperties);
   return response.data;
 };
