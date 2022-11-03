@@ -16,7 +16,7 @@ export type BaseCronJob = {
    * A valid cron expression
    * @example '* * * * *'
    *
-   * @see https://crontab.guru/#*_*_*_*_* for more examples
+   * @see {@link https://crontab.guru} for more examples
    *
    */
   expression: string;
