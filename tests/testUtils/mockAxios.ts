@@ -2,14 +2,14 @@ import { Axios, AxiosInstance } from 'axios';
 import { getAxios } from '../../src/axios';
 import { getMock } from './getMock';
 
-type GetAxiosMock = Partial<AxiosInstance> & {
+type AxiosMock = Partial<AxiosInstance> & {
   put: jest.Mock<Partial<Axios['put']>>;
   post: jest.Mock<Partial<Axios['post']>>;
   get: jest.Mock<Partial<Axios['get']>>;
 };
 
-export const mockGetAxios = (): GetAxiosMock => {
-  const mock: GetAxiosMock = {
+export const mockAxios = (): AxiosMock => {
+  const mock: AxiosMock = {
     put: jest.fn(),
     post: jest.fn(),
     get: jest.fn(),
