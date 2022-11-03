@@ -1,8 +1,8 @@
 import { CronJobStatus } from './CronJobStatus';
 // TODO
-export type BaseCronJOb = {
+export type BaseCronJob = {
   /**
-   * ID of this event
+   * ID of this cron job
    */
   id: string;
 
@@ -13,10 +13,12 @@ export type BaseCronJOb = {
   payload: string;
 
   /**
-   * An ISO timestamp of when you would like your event sent back to you
-   * @example '2022-09-30T22:22:06.390Z'
+   * A valid cron expression
+   * @example '* * * * *'
+   *
+   *
    */
-  scheduledTime: string;
+  expression: string;
 
   /**
    * The endpoint that we should POST events to.
@@ -26,32 +28,23 @@ export type BaseCronJOb = {
   destination: string;
 
   /**
-   * The current event status. See {@link EventStatus}
+   * The current cron job status. See {@link CronJobStatus}
    */
-  status: EventStatus;
+  status: CronJobStatus;
 
   /**
-   * When this event was created
+   * When this cron job was created
    */
   createdAt: string;
 
   /**
-   * When this event was last updated
+   * When this cron job was last updated
    */
   updatedAt: string;
 
   /**
-   * ID of the org this event belongs to
+   * ID of the org this cron job belongs to
    */
   org: string;
 
-  /**
-   * Date when this event was sent to your destination. This will only be here if the event was successfully sent.
-   */
-  sentAt?: string;
-
-  /**
-   * Date when this event failed. Either to queue or to send to your endpoint.
-   */
-  failedAt?: string;
 };

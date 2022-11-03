@@ -1,4 +1,4 @@
-export type CronHistory = {
+export type CronJobHistory = {
   cron: string;
   createdAt: string;
   status?: string;
