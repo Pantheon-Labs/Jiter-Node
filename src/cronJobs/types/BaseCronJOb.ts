@@ -16,12 +16,13 @@ export type BaseCronJob = {
    * A valid cron expression
    * @example '* * * * *'
    *
+   * @see https://crontab.guru/#*_*_*_*_* for more examples
    *
    */
   expression: string;
 
   /**
-   * The endpoint that we should POST events to.
+   * The endpoint that we should POST cron jobs to at your desired schedule
    * @example
    * 'https://your.app/webhooks/jiter'
    */
@@ -47,4 +48,8 @@ export type BaseCronJob = {
    */
   org: string;
 
+  /**
+   * When the next execution date of this cron job will be
+   */
+  nextExecutionDate?: string;
 };

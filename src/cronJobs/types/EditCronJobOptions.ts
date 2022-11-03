@@ -1,10 +1,9 @@
-import { BaseEvent } from './BaseEvent';
-import { EventStatus } from './EventStatus';
-// TODO
+import { BaseCronJob } from './BaseCronJob';
+import { CronJobStatus } from './CronJobStatus';
 
 type EditableProperties = Partial<
-  Pick<BaseEvent, 'payload' | 'destination'> & { status: EventStatus.Cancelled }
+  Pick<BaseCronJob, 'payload' | 'destination'> & { status: CronJobStatus }
 >;
-type RequiredProperties = Pick<BaseEvent, 'id'>;
+type RequiredProperties = Pick<BaseCronJob, 'id'>;
 
-export type EditEventOptions = EditableProperties & RequiredProperties;
+export type EditCronJobOptions = EditableProperties & RequiredProperties;

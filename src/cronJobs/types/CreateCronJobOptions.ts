@@ -1,6 +1,5 @@
-import { BaseEvent } from './BaseEvent';
-// TODO
+import { BaseCronJob } from './BaseCronJob';
 
 export type CreateEventOptions = Required<
-  Pick<BaseEvent, 'scheduledTime' | 'payload' | 'destination'>
+  Pick<BaseCronJob, 'payload' | 'destination' | 'expression'>
 >;

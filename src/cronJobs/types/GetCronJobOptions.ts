@@ -1,4 +1,3 @@
-import { BaseEvent } from './BaseEvent';
-// TODO
+import { BaseCronJob } from './BaseCronJob';
 
-export type GetEventOptions = Pick<BaseEvent, 'id'>;
+export type GetCronJobOptions = Pick<BaseCronJob, 'id'>;
