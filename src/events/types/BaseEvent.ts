@@ -1,5 +1,6 @@
 import { EventStatus } from './EventStatus';
 
+// TODO!!!!!!!!!!!!!!!!!!! Event history
 export type BaseEvent = {
   /**
    * ID of this event
