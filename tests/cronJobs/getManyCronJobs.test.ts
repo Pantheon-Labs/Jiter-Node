@@ -24,7 +24,7 @@ describe('CronJobs.getManyCronJobs', () => {
 
     const response = await Jiter.CronJobs.getManyCronJobs({});
     expect(axiosMock.get).toHaveBeenCalledTimes(1);
-    expect(axiosMock.get).toHaveBeenCalledWith(`${cronJobsPath}`);
+    expect(axiosMock.get).toHaveBeenCalledWith(cronJobsPath);
     expect(response).toBe(mockResponseData);
   });
 
