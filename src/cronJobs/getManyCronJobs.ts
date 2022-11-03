@@ -1,10 +1,11 @@
 import { getAxios } from '../axios';
 import { cronJobsPath } from './consts';
+import { BaseCronJob, GetManyCronJobsOptions } from './types';
 
 /**
- * Create a cron job
+ * Get all the cron jobs in your org
  */
-export const getManyCronJobs = async (createCronJobOptions: CreateCronJobOptions) => {
-  const response = await getAxios().post<BaseEvent>(cronJobsPath, { ...createEventOptions });
+export const getManyCronJobs = async (getManyCronJobsOptions: GetManyCronJobsOptions) => {
+  const response = await getAxios().post<BaseCronJob>(cronJobsPath, { ...getManyCronJobsOptions });
   return response.data;
 };

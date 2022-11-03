@@ -1,11 +1,11 @@
 import { getAxios } from '../axios';
 import { cronJobsPath } from './consts';
-import { BaseCronJob, CreateCronJobOptions } from './types';
+import { BaseCronJob, EditCronJobOptions } from './types';
 
 /**
  * Edit a cron job
  */
-export const editCronJob = async (createCronJobOptions: CreateCronJobOptions) => {
-  const response = await getAxios().post<BaseCronJob>(cronJobsPath, { ...createCronJobOptions });
+export const editCronJob = async (editCronJobOptions: EditCronJobOptions) => {
+  const response = await getAxios().post<BaseCronJob>(cronJobsPath, { ...editCronJobOptions });
   return response.data;
 };
