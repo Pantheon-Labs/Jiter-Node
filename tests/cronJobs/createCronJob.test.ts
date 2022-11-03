@@ -1,12 +1,12 @@
 import { createCronJob, cronJobsPath } from '../../src/cronJobs';
+import { BaseCronJob } from '../../src/cronJobs/types';
 import { mockAxios } from '../testUtils/mockAxios';
 
 const axiosMock = mockAxios();
 
 describe('createCronJob', () => {
   xit('creates a cron job', () => {
-    // TODO: Give this a type once the types are finished
-    const mockData = { id: 'hello world' };
+    const mockData: Partial<BaseCronJob> = { id: 'hello world' };
     axiosMock.post.mockReturnValueOnce({ data: mockData });
 
     const createCronJobOptions = {
