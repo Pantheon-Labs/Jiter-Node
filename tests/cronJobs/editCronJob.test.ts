@@ -20,7 +20,7 @@ describe('CronJobs.editCronJob', () => {
       id,
     };
 
-    const response = await Jiter.CronJobs.editCronJob({ ...editCronJobOptions });
+    const response = await Jiter.CronJobs.editCronJob(editCronJobOptions);
 
     expect(axiosMock.put).toHaveBeenCalledTimes(1);
     expect(axiosMock.put).toHaveBeenCalledWith(
