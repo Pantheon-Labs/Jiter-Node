@@ -1,3 +1,4 @@
+import { EventHistory } from './EventHistory';
 import { EventStatus } from './EventStatus';
 
 // TODO!!!!!!!!!!!!!!!!!!! Event history
@@ -55,4 +56,9 @@ export type BaseEvent = {
    * Date when this event failed. Either to queue or to send to your endpoint.
    */
   failedAt?: string;
+
+  /**
+   * Pervious executions for the event, including retries
+   */
+  history?: EventHistory[];
 };
