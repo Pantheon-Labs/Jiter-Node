@@ -1,5 +1,5 @@
 import { BaseCronJob } from './BaseCronJob';
 
-export type CreateEventOptions = Required<
+export type CreateCronJobOptions = Required<
   Pick<BaseCronJob, 'payload' | 'destination' | 'expression'>
 >;
