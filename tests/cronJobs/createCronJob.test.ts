@@ -6,7 +6,7 @@ import { mockAxios } from '../testUtils/mockAxios';
 const axiosMock = mockAxios();
 
 describe('CronJobs.createCronJob', () => {
-  xit('creates a cron job', () => {
+  it('creates a cron job', async () => {
     const mockData: Partial<BaseCronJob> = { id: 'hello world' };
     axiosMock.post.mockReturnValueOnce({ data: mockData });
 
@@ -16,7 +16,7 @@ describe('CronJobs.createCronJob', () => {
       destination: 'https://your.app/webhooks',
     };
 
-    const response = Jiter.CronJobs.createCronJob(createCronJobOptions);
+    const response = await Jiter.CronJobs.createCronJob(createCronJobOptions);
 
     expect(axiosMock.post).toHaveBeenCalledTimes(1);
     expect(axiosMock.post).toHaveBeenCalledWith(

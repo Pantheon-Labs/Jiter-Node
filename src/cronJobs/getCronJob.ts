@@ -6,6 +6,7 @@ import { BaseCronJob, GetCronJobOptions } from './types';
  * Get info about a specific cron job
  */
 export const getCronJob = async (getCronJobOptions: GetCronJobOptions) => {
-  const response = await getAxios().post<BaseCronJob>(cronJobsPath, { ...getCronJobOptions });
+  const { id } = getCronJobOptions;
+  const response = await getAxios().get<BaseCronJob>(`${cronJobsPath}/${id}`);
   return response.data;
 };
