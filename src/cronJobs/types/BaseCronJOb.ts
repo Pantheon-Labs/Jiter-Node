@@ -1,4 +1,4 @@
-import { EventStatus } from './EventStatus';
+import { CronJobStatus } from './CronJobStatus';
 // TODO
 export type BaseCronJOb = {
   /**
