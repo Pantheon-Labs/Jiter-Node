@@ -1,31 +1,31 @@
-import Jiter, { BaseEvent, EditEventOptions, EventStatus } from '../../src';
-import { eventsPath } from '../../src/events/consts';
+import Jiter, { cronJobsPath } from '../../src';
+import { BaseCronJob, CronJobStatus, EditCronJobOptions } from '../../src/cronJobs/types';
 import { mockAxios } from '../testUtils/mockAxios';
 
 const axiosMock = mockAxios();
 
-describe('Events.editEvent', () => {
-  it('edits an event with editable properties', async () => {
+describe('CronJobs.editCronJob', () => {
+  it('edits a cron job with editable properties', async () => {
     const id = '123';
-    const mockResponseData: Partial<BaseEvent> = { id };
+    const mockResponseData: Partial<BaseCronJob> = { id };
     axiosMock.put.mockReturnValueOnce({ data: mockResponseData });
 
-    const eventData: Partial<EditEventOptions> = {
+    const cronJobData: Partial<EditCronJobOptions> = {
       payload: 'beep',
       destination: 'the moon',
-      status: EventStatus.Cancelled,
+      status: CronJobStatus.Disabled,
     };
-    const editEventOptions: EditEventOptions = {
-      ...eventData,
+    const editCronJobOptions: EditCronJobOptions = {
+      ...cronJobData,
       id,
     };
 
-    const response = await Jiter.Events.editEvent({ ...editEventOptions });
+    const response = await Jiter.CronJobs.editCronJob({ ...editCronJobOptions });
 
     expect(axiosMock.put).toHaveBeenCalledTimes(1);
     expect(axiosMock.put).toHaveBeenCalledWith(
-      `${eventsPath}/${id}`,
-      expect.objectContaining({ ...eventData }),
+      `${cronJobsPath}/${id}`,
+      expect.objectContaining({ ...cronJobData }),
     );
     expect(response).toBe(mockResponseData);
   });
