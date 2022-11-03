@@ -4,4 +4,4 @@ export * from './CronJobStatus';
 export * from './EditCronJobOptions';
 export * from './GetCronJobOptions';
 export * from './GetManyCronJobsOptions';
-export * from "./CronJobWithHistory"
+export * from './CronJobWithHistory';

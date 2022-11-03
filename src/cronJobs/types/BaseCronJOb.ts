@@ -1,5 +1,5 @@
 import { CronJobStatus } from './CronJobStatus';
-// TODO
+
 export type BaseCronJob = {
   /**
    * ID of this cron job
