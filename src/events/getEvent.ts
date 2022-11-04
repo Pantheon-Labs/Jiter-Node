@@ -1,6 +1,6 @@
 import { getAxios } from '../axios';
 import { eventsPath } from './consts';
-import { BaseEvent } from './types/BaseEvent';
+import { EventWithHistory } from './types';
 import { GetEventOptions } from './types/GetEventOptions';
 
 /**
@@ -8,6 +8,6 @@ import { GetEventOptions } from './types/GetEventOptions';
  */
 export const getEvent = async (getEventOptions: GetEventOptions) => {
   const { id } = getEventOptions;
-  const response = await getAxios().get<BaseEvent>(`${eventsPath}/${id}`);
+  const response = await getAxios().get<EventWithHistory>(`${eventsPath}/${id}`);
   return response.data;
 };

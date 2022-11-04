@@ -1,14 +1,14 @@
 import Jiter, { BaseEvent, EditEventOptions, EventStatus } from '../../src';
 import { eventsPath } from '../../src/events/consts';
-import { mockGetAxios } from '../testUtils/getAxiosMock';
+import { mockAxios } from '../testUtils/mockAxios';
 
-const getAxiosMock = mockGetAxios();
+const axiosMock = mockAxios();
 
 describe('Events.editEvent', () => {
   it('edits an event with editable properties', async () => {
     const id = '123';
     const mockResponseData: Partial<BaseEvent> = { id };
-    getAxiosMock.put.mockReturnValueOnce({ data: mockResponseData });
+    axiosMock.put.mockReturnValueOnce({ data: mockResponseData });
 
     const eventData: Partial<EditEventOptions> = {
       payload: 'beep',
@@ -22,8 +22,8 @@ describe('Events.editEvent', () => {
 
     const response = await Jiter.Events.editEvent({ ...editEventOptions });
 
-    expect(getAxiosMock.put).toHaveBeenCalledTimes(1);
-    expect(getAxiosMock.put).toHaveBeenCalledWith(
+    expect(axiosMock.put).toHaveBeenCalledTimes(1);
+    expect(axiosMock.put).toHaveBeenCalledWith(
       `${eventsPath}/${id}`,
       expect.objectContaining({ ...eventData }),
     );
