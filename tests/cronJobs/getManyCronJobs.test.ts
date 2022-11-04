@@ -1,4 +1,5 @@
-import Jiter, { cronJobsPath } from '../../src';
+import Jiter from '../../src';
+import { cronJobsPath } from '../../src/cronJobs/consts';
 import { BaseCronJob } from '../../src/cronJobs/types';
 import { mockAxios } from '../testUtils/mockAxios';
 
