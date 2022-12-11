@@ -29,7 +29,8 @@
     "no-plusplus": ["error"],
     "no-nested-ternary": ["error"],
     "import/extensions": ["error", "ignorePackages", { "js": "never", "ts": "never" }],
-    "import/prefer-default-export": ["off"]
+    "import/prefer-default-export": ["off"],
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
   },
   "settings": {
     "import/resolver": { "node": { "extensions": [".js", ".ts"] } }

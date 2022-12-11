@@ -1,4 +1,5 @@
 import type { Handler } from 'express';
+import { getJiterConfig } from '../config';
 import { REQUEST_TIMESTAMP_HEADER, SIGNATURE_HEADER } from '../consts';
 import {
   WebhookHandlerCallback,
@@ -8,7 +9,7 @@ import {
   WebhookHandlerParsedCallback,
   WebhookHandlerArgs,
 } from '../types';
-import { signatureIsValid } from '../utils';
+import { decrypt, signatureIsValid } from '../utils';
 
 function isParsed<T extends JiterEventObjectPayload>(
   callback: WebhookHandlerArgs<T>[0],
@@ -39,15 +40,26 @@ export const webhookHandler: WebhookHandler =
       return;
     }
 
-    const { payload: rawPayload, scheduledTime: rawScheduledTime } = req.body as Record<
-      string,
-      string
-    >;
+    let rawPayload = req.body.payload as string;
+    const rawScheduledTime = req.body.scheduledTime as string;
 
     const isValid = signatureIsValid({ signature, requestTimestamp, body: req.body });
     if (!isValid) {
       res.sendStatus(401);
       return;
+    }
+
+    if (!options?.disableEncryption) {
+      const config = getJiterConfig();
+
+      if (config.encryption) {
+        try {
+          rawPayload = decrypt(rawPayload);
+        } catch (err) {
+          res.sendStatus(500);
+          return;
+        }
+      }
     }
 
     res.sendStatus(200);
