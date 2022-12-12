@@ -9,15 +9,13 @@ const defaultConfigOptions: Required<DefaultedJiterConfig> = {
 
 let jiterConfig: JiterConfigInstance | undefined;
 
-export interface JiterInit {
-  (configOptions: JiterConfig): void;
-}
+export type JiterInitFn = (configOptions: JiterConfig) => void;
 
 /**
  * Initializes the Jiter SDK
  * @params `configOptions` {@link JiterConfigOptions} for initializing your instance of Jiter
  */
-export const init: JiterInit = ({ encryption, ...jiterConfigOptions }) => {
+export const init: JiterInitFn = ({ encryption, ...jiterConfigOptions }) => {
   jiterConfig = { ...defaultConfigOptions, ...jiterConfigOptions };
   if (!jiterConfig.apiKey?.trim()) throw new Error('Invalid API Key');
   if (!jiterConfig.signingSecret?.trim()) throw new Error('Invalid Signing Secret');

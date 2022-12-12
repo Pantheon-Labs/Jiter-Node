@@ -1,9 +1,9 @@
-import { JiterInit } from '../src/config';
+import { JiterInitFn } from '../src/config';
 import { DEFAULT_TIMEOUT, DEFAULT_URL } from '../src/consts';
 import { EncryptionOptions, JiterConfigInstance } from '../src/types/config';
 
 type ConfigModule = {
-  init: JiterInit;
+  init: JiterInitFn;
   getJiterConfig: () => JiterConfigInstance;
 };
 
