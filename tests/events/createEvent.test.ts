@@ -115,7 +115,7 @@ describe('Events.createEvent', () => {
     expect(transformedData).toBe(createEventOptions);
   });
 
-  it('skips encryption if the option disableEncryption is true', async () => {
+  it('skips encryption if the option encryption override is false', async () => {
     const mockData: Partial<BaseEvent> = { id: 'hello world' };
     getAxiosMock.post.mockReturnValueOnce({ data: mockData });
 
@@ -124,7 +124,7 @@ describe('Events.createEvent', () => {
       scheduledTime: new Date(Date.now() + 800).toISOString(),
       destination: 'https://your.app/webhooks',
     };
-    await Jiter.Events.createEvent({ ...createEventOptions, disableEncryption: true });
+    await Jiter.Events.createEvent({ ...createEventOptions, overrides: { encryption: false } });
 
     expect(getAxiosMock.post).toHaveBeenCalledTimes(1);
     expect(getAxiosMock.post).toHaveBeenCalledWith(

@@ -15,6 +15,9 @@ const mockConfigBase: Omit<JiterConfigInstance, 'encryption'> = {
   timeout: 0,
 };
 
+/** Encryption Test Notes
+ * All of these are real values, do not change them! If they are changed they must be generated with the Crypto library again so that the encryption/decryption tests function correctly
+ */
 const mockRandomBytes = '84259b23b50b952191d3c66c';
 const input = 'hello world';
 const encryptionKeyId = 'one';

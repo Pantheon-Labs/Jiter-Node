@@ -107,14 +107,14 @@ describe('validateWebhook middleware', () => {
     expect(mockRes.sendStatus).toBeCalledWith(200);
   });
 
-  it('skips decryption if disableEncryption option is true', () => {
+  it('skips decryption if encryption override option is false', () => {
     const mockReq: MockRequest = {
       body: {},
       header: mockHeaderMethod,
     };
 
     const mockCallback = jest.fn();
-    webhookHandler(mockCallback, { parse: false, disableEncryption: true })(
+    webhookHandler(mockCallback, { parse: false, overrides: { encryption: false } })(
       mockReq as Request,
       mockRes as Response,
       mockNext,

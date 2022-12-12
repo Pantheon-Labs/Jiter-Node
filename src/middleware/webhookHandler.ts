@@ -49,7 +49,7 @@ export const webhookHandler: WebhookHandler =
       return;
     }
 
-    if (!options?.disableEncryption) {
+    if (options?.overrides?.encryption !== false) {
       const config = getJiterConfig();
 
       if (config.encryption) {
