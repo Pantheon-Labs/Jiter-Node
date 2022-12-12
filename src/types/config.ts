@@ -1,19 +1,3 @@
-export type OverrideJiterConfigOptions = {
-  /**
-   * @default {@link DEFAULT_URL}
-   */
-  baseUrl?: string;
-
-  /**
-   * The amount of milliseconds allowed between when a webhook event is sent and received before it becomes stale
-   *
-   * This value is used to help prevent Replay Attacks
-   *
-   * @default {@link DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS}
-   */
-  millisecondsUntilWebhookExpiration?: number;
-};
-
 export type EncryptionOptions<Key = string> = {
   /**
    * The encryption keys used to encrypt and decrypt data before sending it to Jiter.
@@ -39,21 +23,33 @@ export type EncryptionOptions<Key = string> = {
   }>;
 };
 
-export type JiterConfigOptions = {
+/**
+ * The options you can pass into init that are defaulted
+ */
+export interface DefaultedJiterConfig {
+  /**
+   * @default {@link DEFAULT_URL}
+   */
+  baseUrl?: string;
+
+  /**
+   * The amount of milliseconds allowed between when a webhook event is sent and received before it becomes stale
+   *
+   * This value is used to help prevent Replay Attacks
+   *
+   * @default {@link DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS}
+   */
+  millisecondsUntilWebhookExpiration?: number;
   /**
    * @default {@link DEFAULT_TIMEOUT}
    */
   timeout?: number;
+}
 
-  /**
-   * The encryption options used to encrypt and decrypt data before sending it to Jiter.
-   *
-   * @default null (No encryption)
-   */
-  encryption?: EncryptionOptions | null;
-};
-
-export type JiterConfig = {
+/**
+ * The options you can pass into init
+ */
+export interface JiterConfig extends DefaultedJiterConfig {
   /**
    * The API Key for your given org. Go to {@link https://app.jiter.dev/} to find your API Key
    */
@@ -65,9 +61,19 @@ export type JiterConfig = {
    * Go to {@link https://app.jiter.dev/} to find your Signing Secret
    */
   signingSecret: string;
-} & JiterConfigOptions;
 
-export type JiterConfigInstance = Omit<
-  Required<JiterConfig & OverrideJiterConfigOptions>,
-  'encryption'
-> & { encryption: EncryptionOptions<Buffer> | null };
+  /**
+   * The encryption options used to encrypt and decrypt data before sending it to Jiter.
+   *
+   * @default null (No encryption)
+   */
+  encryption?: EncryptionOptions;
+}
+
+/**
+ * The internal type of the options after being run through init
+ */
+export type JiterConfigInstance = Omit<JiterConfig, 'encryption'> &
+  Required<DefaultedJiterConfig> & {
+    encryption?: EncryptionOptions<Buffer>;
+  };

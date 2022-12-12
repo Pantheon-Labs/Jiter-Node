@@ -12,7 +12,6 @@ const mockConfig: JiterConfigInstance = {
   timeout: 1337,
   baseUrl: 'outer space',
   millisecondsUntilWebhookExpiration: 1000,
-  encryption: null,
 };
 
 describe('axios instance', () => {

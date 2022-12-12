@@ -26,10 +26,7 @@ jest.spyOn(crypto, 'randomBytes').mockImplementation(() => Buffer.from(mockRando
 
 describe('Encryption Utils', () => {
   it('encrypt throws if encryption is not enabled', async () => {
-    getJiterConfigMock.mockReturnValue({
-      ...mockConfigBase,
-      encryption: null,
-    });
+    getJiterConfigMock.mockReturnValue(mockConfigBase);
 
     expect(() => encrypt(input)).toThrow('Encryption Not Enabled');
   });
@@ -62,10 +59,7 @@ describe('Encryption Utils', () => {
   });
 
   it('decrypt returns the input if encryption is not enabled', () => {
-    getJiterConfigMock.mockReturnValue({
-      ...mockConfigBase,
-      encryption: null,
-    });
+    getJiterConfigMock.mockReturnValue(mockConfigBase);
 
     expect(decrypt(input)).toEqual(input);
   });

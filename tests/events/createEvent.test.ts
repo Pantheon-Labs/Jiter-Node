@@ -85,7 +85,6 @@ describe('Events.createEvent', () => {
       signingSecret: 'signing-secret',
       millisecondsUntilWebhookExpiration: 0,
       timeout: 0,
-      encryption: null,
     });
 
     const mockData: Partial<BaseEvent> = { id: 'hello world' };

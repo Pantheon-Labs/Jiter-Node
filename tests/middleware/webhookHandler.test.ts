@@ -27,10 +27,7 @@ const baseJiterConfig = {
   millisecondsUntilWebhookExpiration: 0,
   timeout: 0,
 };
-mockGetJiterConfig.mockReturnValue({
-  ...baseJiterConfig,
-  encryption: null,
-});
+mockGetJiterConfig.mockReturnValue(baseJiterConfig);
 
 const mockRes: Pick<Response, 'sendStatus'> = {
   sendStatus: jest.fn(),
