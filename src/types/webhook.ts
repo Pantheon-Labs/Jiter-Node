@@ -2,6 +2,9 @@ import type { NextFunction, Request } from 'express';
 
 export type WebhookHandlerOptions = {
   parse: false;
+  overrides?: {
+    encryption?: boolean;
+  };
 };
 
 export type WebhookHandlerWithParsingOptions = {

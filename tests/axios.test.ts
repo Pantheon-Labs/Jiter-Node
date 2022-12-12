@@ -1,3 +1,4 @@
+import type { AxiosStatic } from 'axios';
 import { getJiterConfig } from '../src/config';
 import { JiterConfigInstance } from '../src/types/config';
 import { getMock } from './testUtils/getMock';
@@ -20,7 +21,7 @@ describe('axios instance', () => {
 
   it('initializes with the correct config values', () => {
     jest.isolateModules(() => {
-      const axios = require('axios');
+      const axios: AxiosStatic = require('axios');
       const axiosCreateSpy = jest.spyOn(axios, 'create');
       const { getAxios } = jest.requireActual('../src/axios.ts');
 
@@ -44,7 +45,7 @@ describe('axios instance', () => {
 
   it('uses a cached instance when possible', () => {
     jest.isolateModules(() => {
-      const axios = require('axios');
+      const axios: AxiosStatic = require('axios');
       const axiosCreateSpy = jest.spyOn(axios, 'create');
       const { getAxios } = jest.requireActual('../src/axios.ts');
 

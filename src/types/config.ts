@@ -1,4 +1,32 @@
-export type OverrideJiterConfigOptions = {
+export type EncryptionOptions<Key = string> = {
+  /**
+   * The encryption keys used to encrypt and decrypt data before sending it to Jiter.
+   *
+   * The last key in the array is the key used to encrypt new data. Old keys are used to decrypt data that was encrypted with that key.
+   */
+  keys: Array<{
+    /**
+     * The ID of the key, used to identify which key to use when encrypting/decrypting data.
+     *
+     * Must be unique within the array of keys and must not be changed once set.
+     *
+     * This will be sent with the encrypted data so that the correct key is used to decrypt data when it returns.
+     */
+    id: string;
+
+    /**
+     * The encryption key used to encrypt and decrypt data before sending it to Jiter and when it returns.
+     *
+     * Must be 32 bytes long encoded as hexadecimal. Keys should be generated with a cryptographically secure random byte generator.
+     */
+    key: Key;
+  }>;
+};
+
+/**
+ * The options you can pass into init that are defaulted
+ */
+export interface DefaultedJiterConfig {
   /**
    * @default {@link DEFAULT_URL}
    */
@@ -12,16 +40,16 @@ export type OverrideJiterConfigOptions = {
    * @default {@link DEFAULT_WEBHOOK_EXPIRATION_MILLISECONDS}
    */
   millisecondsUntilWebhookExpiration?: number;
-};
-
-export type JiterConfigOptions = {
   /**
    * @default {@link DEFAULT_TIMEOUT}
    */
   timeout?: number;
-};
+}
 
-export type JiterConfig = {
+/**
+ * The options you can pass into init
+ */
+export interface JiterConfig extends DefaultedJiterConfig {
   /**
    * The API Key for your given org. Go to {@link https://app.jiter.dev/} to find your API Key
    */
@@ -33,6 +61,19 @@ export type JiterConfig = {
    * Go to {@link https://app.jiter.dev/} to find your Signing Secret
    */
   signingSecret: string;
-} & JiterConfigOptions;
 
-export type JiterConfigInstance = Required<JiterConfig & OverrideJiterConfigOptions>;
+  /**
+   * The encryption options used to encrypt and decrypt data before sending it to Jiter.
+   *
+   * @default null (No encryption)
+   */
+  encryption?: EncryptionOptions;
+}
+
+/**
+ * The internal type of the options after being run through init
+ */
+export type JiterConfigInstance = Omit<JiterConfig, 'encryption'> &
+  Required<DefaultedJiterConfig> & {
+    encryption?: EncryptionOptions<Buffer>;
+  };

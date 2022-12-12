@@ -4,12 +4,30 @@ import { REQUEST_TIMESTAMP_HEADER, SIGNATURE_HEADER } from '../../src/consts';
 import { webhookHandler } from '../../src/middleware/webhookHandler';
 import { signatureIsValid } from '../../src/utils/signatureIsValid';
 import { getMock } from '../testUtils/getMock';
+import { decrypt } from '../../src/utils/encryption';
+import { getJiterConfig } from '../../src/config';
 
 const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
 jest.mock('../../src/utils/signatureIsValid');
 const mockSignatureIsValid = getMock(signatureIsValid);
 mockSignatureIsValid.mockReturnValue(true);
+
+jest.mock('../../src/utils/encryption.ts');
+const mockDecrypt = getMock(decrypt);
+const decryptMockReturnValue = 'decrypted payload';
+mockDecrypt.mockReturnValue(decryptMockReturnValue);
+
+jest.mock('../../src/config.ts');
+const mockGetJiterConfig = getMock(getJiterConfig);
+const baseJiterConfig = {
+  apiKey: 'api-key',
+  baseUrl: 'base-url',
+  signingSecret: 'signing-secret',
+  millisecondsUntilWebhookExpiration: 0,
+  timeout: 0,
+};
+mockGetJiterConfig.mockReturnValue(baseJiterConfig);
 
 const mockRes: Pick<Response, 'sendStatus'> = {
   sendStatus: jest.fn(),
@@ -87,6 +105,86 @@ describe('validateWebhook middleware', () => {
     expect(mockCallback).toBeCalledTimes(1);
     expect(mockRes.sendStatus).toBeCalledTimes(1);
     expect(mockRes.sendStatus).toBeCalledWith(200);
+  });
+
+  it('skips decryption if encryption override option is false', () => {
+    const mockReq: MockRequest = {
+      body: {},
+      header: mockHeaderMethod,
+    };
+
+    const mockCallback = jest.fn();
+    webhookHandler(mockCallback, { parse: false, overrides: { encryption: false } })(
+      mockReq as Request,
+      mockRes as Response,
+      mockNext,
+    );
+
+    expect(mockGetJiterConfig).not.toHaveBeenCalled();
+    expect(mockDecrypt).not.toHaveBeenCalled();
+  });
+
+  it('skips decryption if encryption is not enabled', () => {
+    const mockReq: MockRequest = {
+      body: {},
+      header: mockHeaderMethod,
+    };
+
+    const mockCallback = jest.fn();
+    webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+
+    expect(mockDecrypt).not.toHaveBeenCalled();
+  });
+
+  it('returns a 500 status if decryption throws', () => {
+    const mockReq: MockRequest = {
+      body: {},
+      header: mockHeaderMethod,
+    };
+
+    mockGetJiterConfig.mockReturnValueOnce({
+      ...baseJiterConfig,
+      encryption: {
+        keys: [],
+      },
+    });
+
+    mockDecrypt.mockImplementationOnce(() => {
+      throw new Error();
+    });
+
+    const mockCallback = jest.fn();
+    webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+
+    expect(mockCallback).not.toBeCalled();
+    expect(mockRes.sendStatus).toBeCalledTimes(1);
+    expect(mockRes.sendStatus).toBeCalledWith(500);
+  });
+
+  it('decrypts the payload if encryption is enabled', () => {
+    const mockReq: MockRequest = {
+      body: {},
+      header: mockHeaderMethod,
+    };
+
+    mockGetJiterConfig.mockReturnValueOnce({
+      ...baseJiterConfig,
+      encryption: {
+        keys: [],
+      },
+    });
+
+    const mockCallback = jest.fn();
+    webhookHandler(mockCallback)(mockReq as Request, mockRes as Response, mockNext);
+
+    expect(mockCallback).toBeCalledTimes(1);
+    expect(mockCallback).toBeCalledWith(
+      expect.objectContaining({ payload: decryptMockReturnValue }),
+    );
+    expect(mockRes.sendStatus).toBeCalledTimes(1);
+    expect(mockRes.sendStatus).toBeCalledWith(200);
+    expect(mockDecrypt).toBeCalledTimes(1);
+    expect(mockDecrypt).toBeCalledWith(mockReq.body.payload);
   });
 
   describe('response variations', () => {
