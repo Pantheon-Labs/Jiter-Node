@@ -1,6 +1,6 @@
 {
   "name": "@jiter/node",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "The official Node SDK for Jiter",
   "main": "./lib/index.js",
   "homepage": "https://jiter.dev",
@@ -8,7 +8,6 @@
   "repository": "https://github.com/Pantheon-Labs/jiter-node.git",
   "author": "Pantheon Labs",
   "license": "Apache-2.0",
-  "private": "false",
   "keywords": [
     "Jiter",
     "cron",
@@ -29,7 +28,8 @@
     "prettier": "prettier -cu \"**/*\"",
     "prettier:fix": "yarn prettier --write",
     "clean": "rimraf lib coverage",
-    "reset": "yarn clean && rimraf **/node_modules"
+    "reset": "yarn clean && rimraf **/node_modules",
+    "release": "npm publish"
   },
   "dependencies": {
     "axios": "^0.27.2"
