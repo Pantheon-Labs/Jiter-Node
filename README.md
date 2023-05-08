@@ -64,6 +64,10 @@ try {
 
   console.log(createdEvent);
 } catch (error) {
-  console.error(error);
+  if (isJiterError(error)) {
+    console.log(`${error.code} - ${error.response?.data}`);
+  } else {
+    console.error(error);
+  }
 }
 ```
