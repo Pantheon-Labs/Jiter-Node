@@ -1,5 +1,6 @@
 import { init } from './config';
 import * as Events from './events';
+import { isJiterError } from './isJiterError';
 import * as Middleware from './middleware';
 import * as Utils from './utils';
 
@@ -11,6 +12,7 @@ export * from './utils';
 
 const Jiter = {
   init,
+  isJiterError,
   Events,
   Middleware,
   Utils,
